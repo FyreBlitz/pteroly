@@ -83,11 +83,10 @@ class Request {
 				'Content-Type': 'application/json',
 				'Accept': 'Application/vnd.pterodactyl.v1+json',
 			},
-			data: data,
 		}).then((response) => {
 			return createObjectSuccess('Deleted successfully.')
 		}).catch((error) => {
-			const err = createError(request, error, data)
+			const err = createError(request, error)
 			if (err) throw err
 		})
 	}
