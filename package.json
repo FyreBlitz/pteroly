@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "A Node.JS API wrapper for the Pterodactyl Panel",
   "main": "Pteroly.js",
-  "dependencies": {
-    "axios": "^0.24.0",
-    "follow-redirects": "^1.14.5",
-    "ws": "^8.2.3"
-  },
   "scripts": {
     "test": "echo \"No test specified\""
   },
@@ -28,5 +23,10 @@
   "bugs": {
     "url": "https://github.com/EiskalterFreund/pteroly/issues"
   },
-  "homepage": "https://pteroly.purenodes.net/"
+  "homepage": "https://pteroly.purenodes.net/",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "follow-redirects": "^1.14.5",
+    "ws": "^8.2.3"
+  }
 }
