@@ -2,6 +2,7 @@
 [![npm](https://img.shields.io/npm/v/pteroly)](https://www.npmjs.com/package/pteroly)
 [![GitHub issues](https://img.shields.io/github/issues/EiskalterFreund/pteroly)](https://github.com/EiskalterFreund/pteroly/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/EiskalterFreund/pteroly)](https://github.com/EiskalterFreund/pteroly/pulls)
+[![Node.js Package](https://github.com/EiskalterFreund/pteroly/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/EiskalterFreund/pteroly/actions/workflows/npm-publish.yml)
 
 # Pteroly
 With pteroly you can easily control your Pterodactyl panel without problems.
