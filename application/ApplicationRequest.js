@@ -8,7 +8,10 @@ class Request {
 
 	getRequest(request, data, _data) {
 		const url = getUrl(request, this.host, data, _data)
-		return axios.get(url, {
+		return axios({
+			url: url,
+			method: 'GET',
+			followRedirect: true,
 			maxRedirects: 5,
 			headers: {
 				'Authorization': 'Bearer ' + this.key,
