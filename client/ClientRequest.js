@@ -20,14 +20,17 @@ class Request {
 		const url = getUrl(request, this.host, data, _data)
 
 		if (request == 'GetServerStatus' || request == 'GetCPUUsage' || request == 'GetDiskUsage' || request == 'GetMemoryUsage') {
-			return axios.default.get(url, {
+			return axios({
+				url: url,
+				method: 'GET',
+				followRedirect: true,
 				maxRedirects: 5,
 				headers: {
 					'Authorization': 'Bearer ' + this.key,
 					'Content-Type': 'application/json',
 					'Accept': 'Application/vnd.pterodactyl.v1+json',
 				},
-			}).then(response => {
+			}).then((response) => {
 				switch(request) {
 					case 'GetServerStatus':
 						return response.data.attributes.current_state
@@ -38,21 +41,25 @@ class Request {
 					case 'GetDiskUsage':
 						return response.data.attributes.resources.disk_bytes / 100000
 					default:
+						if (request.startsWith('GetAll') || request == 'Console') return response.data.data
 						return response.data.attributes
 				}
-			}).catch(err => {
+			}).catch((err) => {
 				const error = createError(request, err)
 				if (error) throw err
 			})
 		} else {
-			return axios.default.get(url, {
+			return axios({
+				url: url,
+				method: 'GET',
+				followRedirect: true,
 				maxRedirects: 5,
 				headers: {
 					'Authorization': 'Bearer ' + this.key,
 					'Content-Type': 'application/json',
 					'Accept': 'Application/vnd.pterodactyl.v1+json',
 				},
-			}).then(response => {
+			}).then((response) => {
 				switch(request) {
 					case request.startsWith('GetAll'):
 						return response.data.data
@@ -75,13 +82,33 @@ class Request {
 					case 'GetServerIPAlias':
 						return response.data.attributes.relationships.allocations.data.attributes.ip_alias
 					default:
+						if (request.startsWith('GetAll') || request == 'Console') return response.data.data
 						return response.data.attributes
 				}
-			}).catch(error => {
-				const err = createError(request, error)
-				if (err) throw err
+			}).catch((err) => {
+				const error = createError(request, err)
+				if (error) throw error
 			})
 		}
+	}
+
+	async websocket(request, data, _data) {
+		const result = await this.getRequest(request, data, _data).catch((err) => console.error(err))
+		if (result != null) {
+			const { token, socket } = result
+			if (token && socket) {
+				const webSocket = new WebSocket(socket)
+				webSocket.send(JSON.stringify({
+					event: 'auth',
+					args:  [token]
+				}))
+				webSocket.onmessage = (event) => {
+					console.log(event)
+				}
+				return webSocket
+			}
+		}
+		return null
 	}
 
 	postRequest(request, data, _data) {
@@ -98,9 +125,9 @@ class Request {
 				'Accept': 'Application/vnd.pterodactyl.v1+json',
 			},
 			data: data,
-		}).then(response => {
+		}).then((response) => {
 			return response
-		}).catch(err => {
+		}).catch((err) => {
 			const error = createError(request, err)
 			if (error) throw error
 		})
@@ -144,15 +171,19 @@ function getUrl(request, host, data, _data) {
 
 		// Backups
 		case 'CreateBackup', 'GetAllBackups':
-			if (_data != null) return host + '/api/client/server/' + _data + '/backups'
-			return host + '/api/client/server/' + data + '/backups'
+			if (_data != null) return host + '/api/client/servers/' + _data + '/backups'
+			return host + '/api/client/servers/' + data + '/backups'
 		case 'DeleteBackup', 'GetBackupInfo':
-			return host + '/api/client/server/' + data + '/backups/' + _data
+			return host + '/api/client/servers/' + data + '/backups/' + _data
 		case 'DownloadBackup':
-			return host + '/api/client/server/' + data + '/backups/' + _data + '/download'
-			
+			return host + '/api/client/servers/' + data + '/backups/' + _data + '/download'
+		
+		// Other
+		case 'Console':
+			return host + '/api/client/servers/' + data + '/websocket'
+		
 		default:
-			return host + '/api/client/'
+			return host + '/api/client/servers'
 	}
 }
 
