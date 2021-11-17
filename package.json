@@ -1,0 +1,31 @@
+{
+  "name": "pteroly",
+  "version": "0.5.0",
+  "description": "A Node.JS API wrapper for the Pterodactyl Panel",
+  "main": "Pteroly.js",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "follow-redirects": "^1.14.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EiskalterFreund/pteroly.git"
+  },
+  "keywords": [
+    "api",
+    "wrapper",
+    "pterodactyl",
+    "panel",
+    "node.js",
+    "nodejs"
+  ],
+  "author": "EiskalterFreund",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EiskalterFreund/pteroly/issues"
+  },
+  "homepage": "https://pteroly.purenodes.net/"
+}
