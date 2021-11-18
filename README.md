@@ -1,5 +1,4 @@
 ﻿[![npm](https://img.shields.io/npm/v/pteroly)](https://www.npmjs.com/package/pteroly)
-[![Node.js Package](https://github.com/EiskalterFreund/pteroly/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/EiskalterFreund/pteroly/actions/workflows/npm-publish.yml)
 [![GitHub](https://img.shields.io/github/license/EiskalterFreund/pteroly)](https://github.com/EiskalterFreund/pteroly/blob/main/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/EiskalterFreund/pteroly)](https://github.com/EiskalterFreund/pteroly/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/EiskalterFreund/pteroly)](https://github.com/EiskalterFreund/pteroly/pulls)
