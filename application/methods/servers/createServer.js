@@ -18,18 +18,18 @@ const req = require('../../ApplicationRequest.js');
  * @param {Number} backups The amount of backups an server is gonna get
  * @yields Object (refer to docs for schema);
 */
-function createServer(serverName, description, userId, defaultAllocation, version, eggId, startupCmd, dockerImage, cpu, memory, disk, io, swap, databases, allocations, backups) {
-	const data = makeData(serverName, description, userId, defaultAllocation, version, eggId, startupCmd, dockerImage, cpu, memory, disk, io, swap, databases, allocations, backups)
+function createServer(serverName, description, nodeId, userId, defaultAllocation, version, eggId, startupCmd, dockerImage, cpu, memory, disk, io, swap, databases, allocations, backups) {
+	const data = makeData(serverName, description, nodeId, userId, defaultAllocation, version, eggId, startupCmd, dockerImage, cpu, memory, disk, io, swap, databases, allocations, backups)
 	const Req = new req(process.env.APPLICATION_NODEACTYL_HOST, process.env.APPLICATION_NODEACTYL_KEY)
 	return Req.postRequest('CreateServer', data, null)
 }
 
-function makeData(serverName, description, userId, defaultAllocation, version, eggId, startupCmd, dockerImage, cpu, memory, disk, io, swap, databases, allocations, backups) {
+function makeData(serverName, description, nodeId, userId, defaultAllocation, version, eggId, startupCmd, dockerImage, cpu, memory, disk, io, swap, databases, allocations, backups) {
 	return {
 		'name': serverName,
 		'user': userId,
 		'description': description,
-		"node": node,
+		"node": nodeId,
 		'egg': eggId,
 		'docker_image': dockerImage,
 		'startup': startupCmd,
