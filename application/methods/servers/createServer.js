@@ -61,7 +61,7 @@ function makeData(serverName, description, nodeId, userId, defaultAllocation, ve
 			"REQUIREMENTS_FILE": "python requirements.txt",
 			"BEDROCK_VERSION": version,
 			"LD_LIBRARY_PATH": ".",
-			"SERVERNAME": nameOfServer,
+			"SERVERNAME": serverName,
 			"GAMEMODE": "survival",
 			"DIFFICULTY": "easy",
 			"CHEATS": "false",
