@@ -1,4 +1,4 @@
-const req = require('../ApplicationRequest.js');
+const req = require('../../ApplicationRequest.js');
 /**
  * @param {Number} internalId The id of the server you want to update
  * @param {String} servername The servername

@@ -1,4 +1,4 @@
-const req = require('../ApplicationRequest.js');
+const req = require('../../ApplicationRequest.js');
 /**
  * @param {String} shortName The short name of your location
  * @param {String} longName The long name of your location

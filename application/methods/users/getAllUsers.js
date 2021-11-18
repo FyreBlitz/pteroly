@@ -1,4 +1,4 @@
-const req = require('../ApplicationRequest.js')
+const req = require('../../ApplicationRequest.js')
 /**
  * @param {Integer} page Specify a page, leave blank if you dont want to paginate
  */

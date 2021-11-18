@@ -1,4 +1,4 @@
-const req = require('../ApplicationRequest.js');
+const req = require('../../ApplicationRequest.js');
 /**
  * @param {Number} locationId The id of the location you want to update
  * @param {String} shortName The short name of your location

@@ -1,5 +1,5 @@
 const { version } = require('discord.js');
-const req = require('../ApplicationRequest.js');
+const req = require('../../ApplicationRequest.js');
 /**
  * @param {String} serverName The name of your server
  * @param {String} description The description of your server

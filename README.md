@@ -23,9 +23,9 @@ First install the package to your Node.JS app/project:
 
 Then you require the package and login into the Pterodactyl API:
 
-    const node   = require('pteroly')
-    const admin  = node.Admin // Add this only if you have an Admin API key
-    const client = node.Client
+    const pteroly = require('pteroly')
+    const admin   = node.Admin // Add this only if you have an Admin API key
+    const client  = node.Client
     
     // You only need to login once in your entire app/project
     // Also add this only if you have an admin API key
@@ -49,6 +49,6 @@ Then you require the package and login into the Pterodactyl API:
     }).catch((err) => console.error(err))
     
     // With await
-    const result = await admin.functionName(<Arguments>).catch((err) => console.error(err))
+    const result  = await admin.functionName(<Arguments>).catch((err) => console.error(err))
     const result2 = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err))
 

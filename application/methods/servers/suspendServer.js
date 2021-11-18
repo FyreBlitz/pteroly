@@ -1,4 +1,4 @@
-const req = require('../ApplicationRequest.js')
+const req = require('../../ApplicationRequest.js')
 
 /**
  * @param {String} internalId Internal ID of the server to suspend

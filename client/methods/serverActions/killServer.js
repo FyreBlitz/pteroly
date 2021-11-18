@@ -1,4 +1,4 @@
-const req = require('../ClientRequest.js')
+const req = require('../../ClientRequest.js')
 
 /**
  * @param {String} serverId ID of the server to kill

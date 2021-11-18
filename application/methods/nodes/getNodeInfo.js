@@ -1,4 +1,4 @@
-const req = require('../ApplicationRequest.js')
+const req = require('../../ApplicationRequest.js')
 
 /**
  * @param {String} nodeId The node ID to get the details of.

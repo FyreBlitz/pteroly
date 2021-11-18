@@ -1,4 +1,4 @@
-const req = require('../ClientRequest')
+const req = require('../../ClientRequest.js')
 
 /**
  * @param {String} serverId ID of the server RAM Usage of
