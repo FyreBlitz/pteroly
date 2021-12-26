@@ -9,6 +9,7 @@ It is always up-to-date and supports the latest version of the Pterodactyl panel
 
 [Pteroly Documentation](https://pteroly.purenodes.net/)
 | [npmjs package](https://www.npmjs.com/package/pteroly/)
+| [My PayPal](https://paypal.me/PureNodes)
 
 <u>Benefits of Pteroly:</u>
  - [x] Fast
