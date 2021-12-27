@@ -1,6 +1,10 @@
 {
   "name": "pteroly",
+<<<<<<< HEAD
   "version": "1.2.1",
+=======
+  "version": "1.1.0",
+>>>>>>> 65e2d024bc8b081630492bba4535ae1f69a1304d
   "description": "A Node.JS API wrapper for the Pterodactyl Panel",
   "main": "lib/pteroly.js",
   "types": "lib/pteroly.d.ts",
