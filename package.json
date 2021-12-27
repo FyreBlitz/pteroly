@@ -1,8 +1,9 @@
 {
   "name": "pteroly",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "description": "A Node.JS API wrapper for the Pterodactyl Panel",
-  "main": "Pteroly.js",
+  "main": "lib/pteroly.js",
+  "types": "lib/pteroly.d.ts",
   "scripts": {
     "test": "echo \"No test specified\""
   },
@@ -25,8 +26,11 @@
   },
   "homepage": "https://pteroly.purenodes.net/",
   "dependencies": {
+    "@types/node": "^17.0.5",
     "axios": "^0.24.0",
     "follow-redirects": "^1.14.5",
+    "fs": "^0.0.1-security",
+    "typescript": "^4.5.4",
     "ws": "^8.2.3"
   }
 }
