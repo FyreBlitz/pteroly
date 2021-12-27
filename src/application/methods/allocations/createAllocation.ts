@@ -19,4 +19,4 @@ function makeData(ip: string, ports: string[]) {
 	}
 }
 
-module.exports = createAllocation
+export default createAllocation

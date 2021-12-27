@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 // Users
 import createuser from './methods/users/createUser'
@@ -18,22 +18,28 @@ import unsuspendserver from './methods/servers/unsuspendServer'
 import getserverinfo from './methods/servers/getServerInfo'
 
 // Nodes
-const createnode  = require('./methods/nodes/createNode')
-const getnodeinfo = require('./methods/nodes/getNodeInfo')
-const getallnodes = require('./methods/nodes/getAllNodes')
-const deletenode  = require('./methods/nodes/deleteNode')
+import createnode  from './methods/nodes/createNode'
+import getnodeinfo from './methods/nodes/getNodeInfo'
+import getallnodes from './methods/nodes/getAllNodes'
+import deletenode  from './methods/nodes/deleteNode'
 
 // Databases
-const createdatabase        = require('./methods/databases/createDatabase')
-const resetdatabasepassword = require('./methods/databases/resetDatabasePassword')
-const getalldatabases       = require('./methods/databases/getAllDatabases')
-const getdatabaseinfo       = require('./methods/databases/getDatabaseInfo')
-const deletedatabase        = require('./methods/databases/deleteDatabase')
+import createdatabase        from './methods/databases/createDatabase'
+import resetdatabasepassword from './methods/databases/resetDatabasePassword'
+import getalldatabases       from './methods/databases/getAllDatabases'
+import getdatabaseinfo       from './methods/databases/getDatabaseInfo'
+import deletedatabase        from './methods/databases/deleteDatabase'
 
 // Allocations
-const getallallocations = require('./methods/allocations/getAllAllocations')
-const deleteallocation  = require('./methods/allocations/deleteAllocation')
-const createallocation  = require('./methods/allocations/createAllocation')
+import getallallocations from './methods/allocations/getAllAllocations'
+import deleteallocation  from './methods/allocations/deleteAllocation'
+import createallocation  from './methods/allocations/createAllocation'
+
+// Other
+import post from './methods/post';
+import get from './methods/get';
+import put from './methods/put';
+import del from './methods/delete';
 
 /**
  * @param {String} host Host to connect to
@@ -48,7 +54,6 @@ function login(host: string, key: string, callback: any) {
 	process.env.APPLICATION_PTEROLY_KEY  = key
 
 	axios.get(host + '/api/application/users', {
-		responseEncoding: 'utf8',
 		maxRedirects: 5,
 		headers: {
 			'Authorization': 'Bearer ' + key,
@@ -122,5 +127,11 @@ const functions = {
 	// Allocations
 	getAllAllocations: getallallocations,
 	deleteAllocation:  deleteallocation,
+
+	// Other
+	post: post,
+	get: get,
+	put: put,
+	delete: del,
 };
 export = functions;

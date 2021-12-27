@@ -34,6 +34,12 @@ import downloadbackup from './methods/backups/downloadBackup'
 import getallbackups  from './methods/backups/getAllBackups'
 import getbackupinfo  from './methods/backups/getBackupInfo'
 
+// Custom
+import post from './methods/post';
+import get from './methods/get';
+import put from './methods/put';
+import del from './methods/delete';
+
 /**
  *
  * @param {String} host Host to use
@@ -110,5 +116,11 @@ const functions = {
 	killServer:    killserver,
 	restartServer: restartserver,
 	sendCommand:   sendcommand,
+
+	// Other
+	post: post,
+	get: get,
+	put: put,
+	delete: del,
 };
 export = functions;

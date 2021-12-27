@@ -92,6 +92,85 @@ class ApplicationRequest {
 			if (err) throw err
 		})
 	}
+
+	
+	cPostRequest = (path: string, body: JSON) => {
+		const url: string = this.host + path;
+		
+		return axios({
+			url: url,
+			method: 'POST',
+			maxRedirects: 5,
+			headers: {
+				'Authorization': 'Bearer ' + this.key,
+				'Content-Type': 'application/json',
+				'Accept': 'Application/vnd.pterodactyl.v1+json',
+			},
+			data: body,
+		}).then((response) => {
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
+
+	cGetRequest = (path: string) => {
+		const url: string = this.host + path;
+		
+		return axios({
+			url: url,
+			method: 'GET',
+			maxRedirects: 5,
+			headers: {
+				'Authorization': 'Bearer ' + this.key,
+				'Content-Type': 'application/json',
+				'Accept': 'Application/vnd.pterodactyl.v1+json',
+			},
+		}).then((response) => {
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
+
+	cDeleteRequest = (path: string) => {
+		const url: string = this.host + path;
+		
+		return axios({
+			url: url,
+			method: 'DELETE',
+			maxRedirects: 5,
+			headers: {
+				'Authorization': 'Bearer ' + this.key,
+				'Content-Type': 'application/json',
+				'Accept': 'Application/vnd.pterodactyl.v1+json',
+			},
+		}).then((response) => {
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
+
+	cPutRequest = (path: string, body: JSON) => {
+		const url: string = this.host + path;
+		
+		return axios({
+			url: url,
+			method: 'PUT',
+			maxRedirects: 5,
+			headers: {
+				'Authorization': 'Bearer ' + this.key,
+				'Content-Type': 'application/json',
+				'Accept': 'Application/vnd.pterodactyl.v1+json',
+			},
+			data: body,
+		}).then((response) => {
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
 }
 
 function getUrl(request: string, host: string, data: any, _data: any) { // _data = nullable

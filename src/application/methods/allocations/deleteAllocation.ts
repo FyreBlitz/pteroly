@@ -5,4 +5,4 @@ function deleteAllocation(nodeId: number, allocationId: number) {
 	return Req.deleteRequest('DeleteAllocation', nodeId, allocationId)
 }
 
-module.exports = deleteAllocation
+export default deleteAllocation

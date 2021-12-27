@@ -4,6 +4,7 @@
   "description": "A Node.JS API wrapper for the Pterodactyl Panel",
   "main": "lib/pteroly.js",
   "types": "lib/pteroly.d.ts",
+  "funding": "https://paypal.me/PureNodes",
   "scripts": {
     "test": "echo \"No test specified\""
   },
