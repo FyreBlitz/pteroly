@@ -146,7 +146,7 @@ class ClientRequest {
 
 	
 	cPostRequest = (path: string, body: JSON) => {
-		const url: string = this.host + path;
+		const url: string = this.host + '/api/client/' + path;
 		
 		return axios({
 			url: url,
@@ -166,7 +166,7 @@ class ClientRequest {
 	}
 
 	cGetRequest = (path: string) => {
-		const url: string = this.host + path;
+		const url: string = this.host + '/api/client/' + path;
 		
 		return axios({
 			url: url,
@@ -185,7 +185,7 @@ class ClientRequest {
 	}
 
 	cDeleteRequest = (path: string) => {
-		const url: string = this.host + path;
+		const url: string = this.host + '/api/client/' + path;
 		
 		return axios({
 			url: url,
@@ -204,7 +204,7 @@ class ClientRequest {
 	}
 
 	cPutRequest = (path: string, body: JSON) => {
-		const url: string = this.host + path;
+		const url: string = this.host + '/api/client/' + path;
 		
 		return axios({
 			url: url,

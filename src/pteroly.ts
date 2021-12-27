@@ -10,9 +10,10 @@ import * as fs from "fs";
 	}).then((res) => {
 		const config = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 		const ver = config.version;
-		const verInt = parseInt(config.version.split(".").join(""));
+		const verInt = parseInt(ver.split(".").join(""));
+		const verlInt = parseInt(res.data['dist-tags'].latest.split(".").join(""))
 		
-		if (parseInt(res.data['dist-tags'].latest.split(".").join("")) > verInt) {
+		if (verInt < verlInt) {
 			console.log("A new Pteroly version is available!");
 			console.log("Latest: " + res.data['dist-tags'].latest);
 			console.log("Current: " + ver);

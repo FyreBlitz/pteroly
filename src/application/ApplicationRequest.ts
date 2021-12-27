@@ -95,7 +95,7 @@ class ApplicationRequest {
 
 	
 	cPostRequest = (path: string, body: JSON) => {
-		const url: string = this.host + path;
+		const url: string = this.host + '/api/application/' + path;
 		
 		return axios({
 			url: url,
@@ -115,7 +115,7 @@ class ApplicationRequest {
 	}
 
 	cGetRequest = (path: string) => {
-		const url: string = this.host + path;
+		const url: string = this.host + '/api/application/' + path;
 		
 		return axios({
 			url: url,
@@ -134,7 +134,7 @@ class ApplicationRequest {
 	}
 
 	cDeleteRequest = (path: string) => {
-		const url: string = this.host + path;
+		const url: string = this.host + '/api/application/' + path;
 		
 		return axios({
 			url: url,
@@ -153,7 +153,7 @@ class ApplicationRequest {
 	}
 
 	cPutRequest = (path: string, body: JSON) => {
-		const url: string = this.host + path;
+		const url: string = this.host + '/api/application/' + path;
 		
 		return axios({
 			url: url,
