@@ -1,27 +1,25 @@
 import * as app from "./application/index";
 import * as client from "./client/index";
 import axios from "axios";
-import * as fs from "fs";
+const pjson = require('../package.json');
 
-(async () => {
-	axios({
-		url: "https://registry.npmjs.com/pteroly",
-		method: "GET",
-	}).then((res) => {
-		const config = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
-		const ver = config.version;
-		const verInt = parseInt(ver.split(".").join(""));
-		const verlInt = parseInt(res.data['dist-tags'].latest.split(".").join(""))
-		
-		if (verInt < verlInt) {
-			console.log("A new Pteroly version is available!");
-			console.log("Latest: " + res.data['dist-tags'].latest);
-			console.log("Current: " + ver);
-		}
-	}).catch((err) => {
-		console.log("Couldn't check Pteroly Updates.\nAre you Offline?");
-	});
-})()
+(() => {
+    axios({
+        method: 'get',
+        url: 'https://registry.npmjs.com/pteroly',
+    }).then((res) => {
+        var version = parseInt(pjson.version.split(".").join(""));
+        var latest = parseInt(res.data["dist-tags"].latest.split(".").join(""));
+        if (latest > version) {
+            console.log("-----| Pteroly |-----");
+            console.log("A newer version of Pteroly is available!");
+            console.log("You can install it using: npm i pteroly@" + res.data["dist-tags"].latest);
+            console.log("");
+            console.log("Current: " + pjson.version + "\nLatest: " + res.data["dist-tags"].latest);
+            console.log("---------------------");
+        }
+    });
+})();
 
 const functions = {
 	Client: client,
