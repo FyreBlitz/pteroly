@@ -2,41 +2,50 @@ import axios from 'axios';
 
 // Users
 import createuser from './methods/users/createUser'
-import getallusers from './methods/users/getAllUsers'
-import getuserinfo from './methods/users/getUserInfo'
+import listusers from './methods/users/listUsers'
+import userdetails from './methods/users/userDetails'
+import userquery from './methods/users/userQuery'
 import updateuser from './methods/users/updateUser'
 import deleteuser from './methods/users/deleteUser'
 
 // Servers
 import createserver from './methods/servers/createServer'
-import getallservers from './methods/servers/getAllServers'
+import listservers from './methods/servers/listServers'
 import updatebuild from './methods/servers/updateBuild'
 import updatedetails from './methods/servers/updateDetails'
 import deleteserver from './methods/servers/deleteServer'
 import suspendserver from './methods/servers/suspendServer'
 import unsuspendserver from './methods/servers/unsuspendServer'
-import getserverinfo from './methods/servers/getServerInfo'
+import serverdetails from './methods/servers/serverDetails'
 
 // Nodes
-import createnode  from './methods/nodes/createNode'
-import getnodeinfo from './methods/nodes/getNodeInfo'
-import getallnodes from './methods/nodes/getAllNodes'
-import deletenode  from './methods/nodes/deleteNode'
+import createnode from './methods/nodes/createNode'
+import nodedetails from './methods/nodes/nodeDetails'
+import listnodes from './methods/nodes/listNodes'
+import deletenode from './methods/nodes/deleteNode'
 
 // Databases
-import createdatabase        from './methods/databases/createDatabase'
+import createdatabase from './methods/databases/createDatabase'
 import resetdatabasepassword from './methods/databases/resetDatabasePassword'
-import getalldatabases       from './methods/databases/getAllDatabases'
-import getdatabaseinfo       from './methods/databases/getDatabaseInfo'
-import deletedatabase        from './methods/databases/deleteDatabase'
+import listdatabases from './methods/databases/listDatabases'
+import databasedetails from './methods/databases/databaseDetails'
+import deletedatabase from './methods/databases/deleteDatabase'
 
 // Allocations
-import getallallocations from './methods/allocations/getAllAllocations'
-import deleteallocation  from './methods/allocations/deleteAllocation'
-import createallocation  from './methods/allocations/createAllocation'
+import listallocations from './methods/allocations/listAllocations'
+import deleteallocation from './methods/allocations/deleteAllocation'
+import createallocation from './methods/allocations/createAllocation'
+
+// Locations
+import listlocations from './methods/locations/listLocations'
+import deletelocation from './methods/locations/deleteLocation'
+import createlocation from './methods/locations/createLocation'
+import updatelocation from './methods/locations/updateLocation'
+import locationdetails from './methods/locations/locationDetails'
 
 // Other
 import post from './methods/post';
+import patch from './methods/patch';
 import get from './methods/get';
 import put from './methods/put';
 import del from './methods/delete';
@@ -90,46 +99,55 @@ function fastLogin(host: string, key: string) {
 }
 
 const functions = {
-	login:     login,
+	login: login,
 	fastLogin: fastLogin,
 
 	// Users
-	getUserInfo: getuserinfo,
-	getAllUsers: getallusers,
-	updateUser:  updateuser,
-	createUser:  createuser,
-	deleteUser:  deleteuser,
+	userDetails: userdetails,
+	listUsers: listusers,
+	updateUser: updateuser,
+	createUser: createuser,
+	deleteUser: deleteuser,
+	userQuery: userquery,
 
 	// Servers
-	getServerInfo:   getserverinfo,
-	getAllServers:   getallservers,
-	createServer:    createserver,
-	suspendServer:   suspendserver,
+	serverDetails: serverdetails,
+	listServers: listservers,
+	createServer: createserver,
+	suspendServer: suspendserver,
 	unsuspendServer: unsuspendserver,
-	updateBuild:     updatebuild,
-	updateDetails:   updatedetails,
-	deleteServer:    deleteserver,
+	updateBuild: updatebuild,
+	updateDetails: updatedetails,
+	deleteServer: deleteserver,
 
 	// Nodes
-	getNodeInfo:      getnodeinfo,
-	getAllNodes:      getallnodes,
-	createNode:       createnode,
-	createAllocation: createallocation,
-	deleteNode:       deletenode,
+	nodeDetails: nodedetails,
+	listNodes: listnodes,
+	createNode: createnode,
+	deleteNode: deletenode,
 	
 	// Database
-	getAllDatabases:       getalldatabases,
-	getDatabaseInfo:       getdatabaseinfo,
-	createDatabase:        createdatabase,
+	listDatabases: listdatabases,
+	databaseDetails: databasedetails,
+	createDatabase: createdatabase,
 	resetDatabasePassword: resetdatabasepassword,
-	deleteDatabase:        deletedatabase,
+	deleteDatabase: deletedatabase,
+
+	// Locations
+	listLocations: listlocations,
+	deleteLocation: deletelocation,
+	createLocation: createlocation,
+	updateLocation: updatelocation,
+	locationDetails: locationdetails,
 
 	// Allocations
-	getAllAllocations: getallallocations,
-	deleteAllocation:  deleteallocation,
+	listAllocations: listallocations,
+	deleteAllocation: deleteallocation,
+	createAllocation: createallocation,
 
 	// Other
 	post: post,
+	patch: patch,
 	get: get,
 	put: put,
 	delete: del,

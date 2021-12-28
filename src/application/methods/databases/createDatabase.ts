@@ -1,23 +1,39 @@
 import req from "../../ApplicationRequest";
 
 /**
- * @param {Integer} internalId Internal ID of the Server to create the Database
- * @param {String} name Name of the Database
- * @param {String} allowedIP IP allowed to connect, leave "%" if you dont want to restrict
- * @param {Integer} hostDBID ID of the Database Host
+ * @param {Number} serverId Internal ID of the Server to create the Database
+ * @param {databaseData} dbData Information for the Database
  */
 
-function createDatabase(internalId: number, name: string, allowedIP: string, hostDBID: number) {
-    const data = makeData(name, allowedIP, hostDBID)
-    const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
-    return Req.postRequest('CreateDatabase', data, internalId)
+interface databaseData {
+    name: string,
+    remote: string,
+    host: number,
+};
+
+interface returnType {
+    id: number,
+    server: number,
+    host: number,
+    database: string,
+    username: string,
+    remote: string,
+    max_connections: null | any,
+    created_at: string,
+    updated_at: string,
 }
 
-function makeData(name: string, allowedIP: string, hostDBID: number) {
+function createDatabase(serverId: number, dbData: databaseData): Promise<returnType> {
+    const data = makeData(dbData)
+    const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
+    return Req.postRequest('CreateDatabase', data, serverId)
+}
+
+function makeData(dbData: databaseData) {
     return {
-        "database": name,
-        "remote": allowedIP,
-        "host": hostDBID,
+        "database": dbData.name,
+        "remote": dbData.remote,
+        "host": dbData.host,
     }
 }
 

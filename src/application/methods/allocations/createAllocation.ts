@@ -6,7 +6,8 @@ import req from "../../ApplicationRequest";
  * @param {Array} ports The ports you want to add to the node
  * @yields Object (refer to docs for schema);
  */
-function createAllocation(nodeId: number, ip: string, ports: string[]) {
+
+function createAllocation(nodeId: number, ip: string, ports: string[]): Promise<any> {
     const data = makeData(ip, ports)
 	const Req  = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY)
 	return Req.postRequest('CreateAllocation', data, nodeId)

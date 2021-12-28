@@ -1,6 +1,6 @@
 {
   "name": "pteroly",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "A Node.JS API wrapper for the Pterodactyl Panel",
   "main": "lib/pteroly.js",
   "types": "lib/pteroly.d.ts",

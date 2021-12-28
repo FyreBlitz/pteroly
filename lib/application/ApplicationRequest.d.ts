@@ -10,6 +10,7 @@ declare class ApplicationRequest {
         message: string;
     }>;
     cPostRequest: (path: string, body: JSON) => Promise<any>;
+    cPatchRequest: (path: string, body: JSON) => Promise<any>;
     cGetRequest: (path: string) => Promise<any>;
     cDeleteRequest: (path: string) => Promise<any>;
     cPutRequest: (path: string, body: JSON) => Promise<any>;

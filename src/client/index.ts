@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // Server Info
-import getallservers   from './methods/serverInfo/getAllServers'
-import getserverinfo   from './methods/serverInfo/getServerInfo'
+import listservers   from './methods/serverInfo/listServers'
+import serverdetails   from './methods/serverInfo/serverDetails'
 import getserverstatus from './methods/serverInfo/getServerStatus'
 import isowner         from './methods/serverInfo/isOwner'
 import getnummericip   from './methods/serverInfo/getNummericIP'
@@ -31,10 +31,11 @@ import sendcommand   from './methods/serverActions/sendCommand'
 import createbackup   from './methods/backups/createBackup'
 import deletebackup   from './methods/backups/deleteBackup'
 import downloadbackup from './methods/backups/downloadBackup'
-import getallbackups  from './methods/backups/getAllBackups'
-import getbackupinfo  from './methods/backups/getBackupInfo'
+import listbackups  from './methods/backups/listBackups'
+import backupdetails  from './methods/backups/backupDetails'
 
 // Custom
+import patch from './methods/patch';
 import post from './methods/post';
 import get from './methods/get';
 import put from './methods/put';
@@ -82,43 +83,44 @@ function fastLogin(host: string, key: string) {
 }
 
 const functions = {
-	login:     login,
+	login: login,
 	fastLogin: fastLogin,
 
 	// Server Info
 	getServerName: getservername,
-	getAllServers: getallservers,
-	getServerInfo: getserverinfo,
-	getCPU:        getcpu,
-	getMemory:     getmemory,
-	getDisk:       getdisk,
-	isOwner:       isowner,
-	getIPAlias:    getipalias,
+	listServers: listservers,
+	serverDetails: serverdetails,
+	getCPU: getcpu,
+	getMemory: getmemory,
+	getDisk: getdisk,
+	isOwner: isowner,
+	getIPAlias: getipalias,
 	getServerPort: getserverport,
 	getNummericIP: getnummericip,
 
 	// Server Usage
 	getServerStatus: getserverstatus,
-	getCPUUsage:     getcpuusage,
-	getMemoryUsage:  getmemoryusage,
-	getDiskUsage:    getdiskusage,
+	getCPUUsage: getcpuusage,
+	getMemoryUsage: getmemoryusage,
+	getDiskUsage: getdiskusage,
 
 	// Backups
-	createBackup:  createbackup,
-	deleteBackup:  deletebackup,
+	createBackup: createbackup,
+	deleteBackup: deletebackup,
 	// downloadBackup: downloadbackup,
-	getAllBackups: getallbackups,
-	getBackupInfo: getbackupinfo,
+	listBackups: listbackups,
+	backupDetails: backupdetails,
 
 	// Server Actions
-	startServer:   startserver,
-	stopServer:    stopserver,
-	killServer:    killserver,
+	startServer: startserver,
+	stopServer: stopserver,
+	killServer: killserver,
 	restartServer: restartserver,
-	sendCommand:   sendcommand,
+	sendCommand: sendcommand,
 
 	// Other
 	post: post,
+	patch: patch,
 	get: get,
 	put: put,
 	delete: del,

@@ -1,5 +1,5 @@
 /**
  * @param {String} serverId ID of the server to get
  */
-declare function GetServerIPAlias(serverId: string): any;
-export default GetServerIPAlias;
+declare function getServerIPAlias(serverId: string): Promise<string>;
+export default getServerIPAlias;

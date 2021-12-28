@@ -164,6 +164,26 @@ class ClientRequest {
 			throw err;
 		});
 	}
+	
+	cPatchRequest = (path: string, body: JSON) => {
+		const url: string = this.host + '/api/client/' + path;
+		
+		return axios({
+			url: url,
+			method: 'PATCH',
+			maxRedirects: 5,
+			headers: {
+				'Authorization': 'Bearer ' + this.key,
+				'Content-Type': 'application/json',
+				'Accept': 'Application/vnd.pterodactyl.v1+json',
+			},
+			data: body,
+		}).then((response) => {
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
 
 	cGetRequest = (path: string) => {
 		const url: string = this.host + '/api/client/' + path;

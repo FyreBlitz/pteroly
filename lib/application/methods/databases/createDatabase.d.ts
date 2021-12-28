@@ -1,8 +1,22 @@
 /**
- * @param {Integer} internalId Internal ID of the Server to create the Database
- * @param {String} name Name of the Database
- * @param {String} allowedIP IP allowed to connect, leave "%" if you dont want to restrict
- * @param {Integer} hostDBID ID of the Database Host
+ * @param {Number} serverId Internal ID of the Server to create the Database
+ * @param {databaseData} dbData Information for the Database
  */
-declare function createDatabase(internalId: number, name: string, allowedIP: string, hostDBID: number): Promise<any>;
+interface databaseData {
+    name: string;
+    remote: string;
+    host: number;
+}
+interface returnType {
+    id: number;
+    server: number;
+    host: number;
+    database: string;
+    username: string;
+    remote: string;
+    max_connections: null | any;
+    created_at: string;
+    updated_at: string;
+}
+declare function createDatabase(serverId: number, dbData: databaseData): Promise<returnType>;
 export default createDatabase;

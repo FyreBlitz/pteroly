@@ -1,5 +1,2 @@
-declare function deleteAllocation(nodeId: number, allocationId: number): Promise<void | {
-    success: boolean;
-    message: string;
-}>;
+declare function deleteAllocation(nodeId: number, allocationId: number): Promise<any>;
 export default deleteAllocation;
