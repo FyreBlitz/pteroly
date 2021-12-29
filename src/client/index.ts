@@ -61,16 +61,12 @@ function login(host: string, key: string, callback: any) {
 		},
 	}).then(function(response) {
 		if (response.status == 404) {
-			callback(false, 'API Key is not valid! (Application)')
+			callback(false, 'API Key is not valid! (Client)')
 		} else {
 			callback(true)
 		}
 	}).catch(error => {
-		if (error.response.status == 403) {
-			callback(false, 'API Key is not valid! (Application)')
-		} else {
-			throw error
-		}
+		callback(false, 'API Key is not valid! (Client)')
 	})
 }
 

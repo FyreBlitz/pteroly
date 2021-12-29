@@ -43,7 +43,7 @@ interface returnType {
 
 function listDatabases(serverId: number): Promise<returnType[]> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
-	return Req.getRequest('GetAllDatabases', serverId, null);
+	return Req.getRequest('ListDatabases', serverId, null);
 }
 
 export default listDatabases;

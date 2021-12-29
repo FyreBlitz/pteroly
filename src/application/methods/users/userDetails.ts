@@ -21,7 +21,7 @@ interface resultType {
 
 function userDetails(userId: number): Promise<resultType> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
-	return Req.getRequest('GetUserInfo', userId, null);
+	return Req.getRequest('UserDetails', userId, null);
 }
 
 export default userDetails;

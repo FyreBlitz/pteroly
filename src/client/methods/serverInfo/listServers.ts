@@ -1,7 +1,7 @@
 import req from "../../ClientRequest";
 
 /**
- * @yields A Array of servers a application key has access to
+ * @param {Number} page The page
  */
 
 interface allocationType {
@@ -14,7 +14,7 @@ interface allocationType {
 		"notes": null | string,
 		"is_default": boolean,
 	},
-}
+};
 
 interface returnType {
 	"object": "server",
@@ -50,12 +50,12 @@ interface returnType {
 			}
 		}
 	}
-}
+};
 
-function listServers(): Promise<returnType[]> {
+function listServers(page: number): Promise<returnType[]> {
 	const Req = new req(process.env.CLIENT_PTEROLY_HOST, process.env.CLIENT_PTEROLY_KEY);
-	return Req.getRequest('GetAllServers', null, null);
+	if (page == -1) return Req.getRequest("ListServers", null, -1);
+	return Req.getRequest("ListServers", null, page);
 }
-
 
 export default listServers;

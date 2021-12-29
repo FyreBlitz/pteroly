@@ -19,7 +19,7 @@ interface returnType {
 
 function listBackups(serverId: string): Promise<returnType> {
 	const Req = new req(process.env.CLIENT_NODEACTYL_HOST, process.env.CLIENT_NODEACTYL_KEY);
-	return Req.getRequest('GetAllBackups', serverId, null);
+	return Req.getRequest('ListBackups', serverId, null);
 }
 
 export default listBackups;

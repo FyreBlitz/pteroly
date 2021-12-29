@@ -14,7 +14,7 @@ interface returnType {
 
 function locationDetails(locationId: number): Promise<returnType> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
-	return Req.getRequest('GetLocationInfo', locationId, null);
+	return Req.getRequest('LocationDetails', locationId, null);
 }
 
 export default locationDetails;

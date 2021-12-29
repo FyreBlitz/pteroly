@@ -19,7 +19,7 @@ interface returnType {
 
 function databaseDetails(serverId: number, dbId: number): Promise<returnType> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
-	return Req.getRequest('GetDatabaseInfo', serverId, dbId);
+	return Req.getRequest('DatabaseDetails', serverId, dbId);
 }
 
 export default databaseDetails
