@@ -2,6 +2,4 @@
 dist
 node_modules
 lib
-bug_report.md
-feature_request.md
 .github
