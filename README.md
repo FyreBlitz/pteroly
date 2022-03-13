@@ -4,21 +4,22 @@
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/EiskalterFreund/pteroly)](https://github.com/EiskalterFreund/pteroly/pulls)
 
 # Pteroly
-With pteroly you can easily control your Pterodactyl panel without problems.
-It is always up-to-date and supports the latest version of the Pterodactyl panel.
+With pteroly you can easily control your Pterodactyl panel quick and easy with a flawless experience and good support.
+Pteroly is always up-to-date and supports the latest versions of the Pterodactyl panel.
 
 [Pteroly Documentation](https://pteroly.purenodes.net/)
 | [NpmJS Package](https://www.npmjs.com/package/pteroly/)
-| [My PayPal](https://paypal.me/PureNodes)
+| [Pteroly PayPal](https://paypal.me/PureNodes)
+| Discord: Soon™️
 
 <u>Benefits of Pteroly:</u>
- - [x] Fast
  - [x] Supports latest Pterodactyl panel
- - [x] up-to-date
  - [x] Supports nearily every api feature of pterodactyl
  - [x] Easy client panel login, which is only required once
+ - [x] Up-to-Date
+ - [x] Easy-to-Use
  - [x] Typescript
- - [x] Easy
+ - [x] Fast
 
 ## Quick Start Guide
 First install the package to your Node.JS app/project:
@@ -40,7 +41,7 @@ Then you require the package and login into the Pterodactyl API:
 	    console.log('Login status Client: ' + loggedIn);
 	    if (!loggedIn) console.error(errorMsg);
     });
-   And then you can call any function you want like this
+   And then you can call any function you want like this, to find all the functions of the panel consider visiting our [documentation](https://pteroly.purenodes.net/).
    
 
     // As a .then function
