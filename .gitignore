@@ -4,7 +4,4 @@ node_modules
 lib
 bug_report.md
 feature_request.md
-./.github/workflows/codeql-analysis.yml
-./.github/ISSUE_TEMPLATE/feature_request.md
-./.github/ISSUE_TEMPLATE/bug_report.md
-./.github
+.github
