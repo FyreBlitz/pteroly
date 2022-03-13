@@ -1,12 +1,12 @@
 {
   "name": "pteroly",
   "version": "1.6.1",
-  "description": "A Node.JS API wrapper for the Pterodactyl Panel",
+  "description": "A fast typescrupt Node.JS API wrapper for the Pterodactyl Panel working with the latest version",
   "main": "lib/pteroly.js",
   "types": "lib/pteroly.d.ts",
   "funding": "https://paypal.me/PureNodes",
   "scripts": {
-    "test": "echo \"No test specified\""
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,12 @@
     "pterodactyl",
     "panel",
     "node.js",
-    "nodejs"
+    "nodejs",
+    "typescript",
+    "javascript",
+    "latest",
+    "updated",
+    "fast"
   ],
   "author": "EiskalterFreund",
   "license": "MIT",

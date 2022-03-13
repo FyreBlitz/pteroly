@@ -6,17 +6,17 @@ class ApplicationRequest {
 
 	constructor(host: any, key: any) {
 		this.host = host;
-		this.key  = key;
+		this.key = key;
 	}
 
 	getRequestUnpaginate = async (url: string): Promise<JSON[]> => {
-		var currentPage = 0;
+		let currentPage = 0;
 
 		// Data
 		const response = await this.cGetRequest(url + "?page=" + (currentPage + 1));
-		var pageData: JSON[] = response.data;
+		let pageData: JSON[] = response.data;
 
-		var totalPages = response.meta.pagination.total_pages;
+		let totalPages = response.meta.pagination.total_pages;
 		currentPage = response.meta.pagination.current_page;
 		if (currentPage < totalPages) {
 			const pageDataNext = await this.getRequestUnpaginate(url)

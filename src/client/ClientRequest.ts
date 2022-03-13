@@ -6,17 +6,17 @@ class ClientRequest {
 
 	constructor(host: any, key: any) {
 		this.host = host;
-		this.key  = key;
+		this.key = key;
 	}
 
 	getRequestUnpaginate = async (url: string, data: string, _data: string): Promise<JSON[]> => {
-		var currentPage = 0;
+		let currentPage = 0;
 
 		// Data
 		const response = await this.cGetRequest(url + "?page=" + (currentPage + 1));
-		var pageData: JSON[] = response.data;
+		let pageData: JSON[] = response.data;
 
-		var totalPages = response.meta.pagination.total_pages;
+		let totalPages = response.meta.pagination.total_pages;
 		currentPage = response.meta.pagination.current_page;
 		if (totalPages> currentPage) {
 			const pageDataNext = await this.getRequestUnpaginate(url, data, _data)
@@ -98,7 +98,7 @@ class ClientRequest {
 				}).catch((err) => {
 					const error = createError(request, err);
 					if (error) throw error;
-				})
+				});
 		}
 	}
 
@@ -143,7 +143,7 @@ class ClientRequest {
 	}
 
 	deleteRequest = (request: string, data: string, _data: string) => {
-		const url: string = getUrl(request, this.host, data, _data)
+		const url: string = getUrl(request, this.host, data, _data);
 
 		return axios({
 			url: url,
@@ -157,9 +157,9 @@ class ClientRequest {
 		}).then((response) => {
 			return response.data;
 		}).catch((err) => {
-			const error = createError(request, err)
-			if (error) throw error
-		})
+			const error = createError(request, err);
+			if (error) throw error;
+		});
 	}
 
 	
