@@ -74,7 +74,6 @@ interface returnType {
 
 function listServers(page: number): Promise<returnType[]> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY)
-	if (page == -1) return Req.getRequest('ListServers', null, -1)
 	return Req.getRequest('ListServers', null, page);
 }
 

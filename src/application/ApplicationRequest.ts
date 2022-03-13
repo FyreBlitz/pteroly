@@ -9,8 +9,8 @@ class ApplicationRequest {
 		this.key  = key;
 	}
 
-	getRequestUnpaginate = async (url: string, data: string, _data: string): Promise<JSON[]> => {
-		var currentPage = 1;
+	getRequestUnpaginate = async (url: string): Promise<JSON[]> => {
+		var currentPage = 0;
 
 		// Data
 		const response = await this.cGetRequest(url + "?page=" + (currentPage + 1));
@@ -19,7 +19,7 @@ class ApplicationRequest {
 		var totalPages = response.meta.pagination.total_pages;
 		currentPage = response.meta.pagination.current_page;
 		if (currentPage < totalPages) {
-			const pageDataNext = await this.getRequestUnpaginate(url, data, _data)
+			const pageDataNext = await this.getRequestUnpaginate(url)
 			pageData = [...pageData, ...pageDataNext];
 		}
 		return pageData;
@@ -27,7 +27,7 @@ class ApplicationRequest {
 
 	getRequest = (request: string, data: any, _data: any): Promise<any> =>  {
 		const url = getUrl(request, this.host, data, _data);
-		if (_data == -1) return this.getRequestUnpaginate(url, data, _data);
+		if (_data == -1) return this.getRequestUnpaginate(url);
 
 		return axios({
 			url: url,
@@ -224,7 +224,7 @@ const getUrl = (request: string, host: string, data: any, _data: any) => { // _d
 		// Server actions
 		case "ListServers": case "CreateServer":
 			if (_data != null && _data >= 0) return host + "/api/application/servers?page=" + _data;
-			if (_data == -1) return "servers/" + data;
+			if (_data == -1) return "servers";
 			return host + "/api/application/servers";
 		case "ServerDetails": case "DeleteServer":
 			return host + "/api/application/servers/" + data;

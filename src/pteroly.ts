@@ -24,17 +24,17 @@ const pjson = require('../package.json');
             var updateType = "update";
             var updateInfo = "Bug Fixes";
 
-            if (relCodeNew > relCodeOld) {
-                updateType = "revision";
-                updateInfo = "Bug Fixes/New Features/More";
+            if (bugCodeNew > bugCodeOld) {
+                updateType = "bug fix";
+                updateInfo = "Bug Fixes";
             }
             if (updCodeNew > updCodeOld) {
                 updateType = "feature update";
                 updateInfo = "Bug Fixes/new Features";
             }
-            if (bugCodeNew > bugCodeOld) {
-                updateType = "bug fix";
-                updateInfo = "Bug Fixes";
+            if (relCodeNew > relCodeOld) {
+                updateType = "revision";
+                updateInfo = "Bug Fixes/New Features/More";
             }
 
             console.log("| Pteroly");
@@ -53,6 +53,12 @@ const pjson = require('../package.json');
 
 const functions = {
 	Client: client,
-	Admin:  app,
+	Admin: app,
 };
+
+functions.Admin.fastLogin("http://192.168.178.47/", "TwEgJyamx7LSdAfatKOIGWLTehMELkS8wt5zFTusk3VBbnHP");
+(async () => {
+    console.log(await functions.Admin.listServers(-1));
+})()
+
 export = functions;
