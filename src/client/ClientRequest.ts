@@ -86,11 +86,11 @@ class ClientRequest {
 						case "GetServerName":
 							return response.data.attributes.name;
 						case "GetNummericIP":
-							return response.data.attributes.relationships.allocations.data.attributes.ip;
+								return response.data.attributes.relationships.allocations.data[0].attributes.ip;
 						case "GetServerPort":
-							return response.data.attributes.relationships.allocations.data.attributes.port;
+								return response.data.attributes.relationships.allocations.data[0].attributes.port;
 						case "GetServerIPAlias":
-							return response.data.attributes.relationships.allocations.data.attributes.ip_alias;
+								return response.data.attributes.relationships.allocations.data[0].attributes.ip_alias;
 						default:
 							if (request.startsWith("List") || request == "Console") return response.data.data;
 							return response.data.attributes;
