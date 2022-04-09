@@ -5,7 +5,7 @@ import req from "../../ClientRequest";
  */
 
 function killServer(serverId: string): Promise<any> {
-	const Req = new req(process.env.CLIENT_NODEACTYL_HOST, process.env.CLIENT_NODEACTYL_KEY);
+	const Req = new req(process.env.CLIENT_PTEROLY_HOST, process.env.CLIENT_PTEROLY_KEY);
 	const data = { 'signal': 'kill' };
 	return Req.postRequest('KillServer', data, serverId);
 }

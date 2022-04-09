@@ -1,6 +1,6 @@
 {
   "name": "pteroly",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "A fast typescrupt Node.JS API wrapper for the Pterodactyl Panel working with the latest version",
   "main": "lib/pteroly.js",
   "types": "lib/pteroly.d.ts",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EiskalterFreund/pteroly.git"
+    "url": "git+https://github.com/OnFire124/pteroly.git"
   },
   "keywords": [
     "api",
@@ -25,12 +25,12 @@
     "updated",
     "fast"
   ],
-  "author": "EiskalterFreund",
+  "author": "OnFire124",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/EiskalterFreund/pteroly/issues"
+    "url": "https://github.com/OnFire124/pteroly/issues"
   },
-  "homepage": "https://pteroly.purenodes.net/",
+  "homepage": "https://pteroly.fyreblitz.com/",
   "dependencies": {
     "@types/node": "^17.0.21",
     "axios": "^0.26.1",

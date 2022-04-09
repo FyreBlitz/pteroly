@@ -15,7 +15,7 @@ interface returnType {
 }
 
 function createBackup(serverId: string): Promise<returnType> {
-	const Req = new req(process.env.CLIENT_NODEACTYL_HOST, process.env.CLIENT_NODEACTYL_KEY);
+	const Req = new req(process.env.CLIENT_PTEROLY_HOST, process.env.CLIENT_PTEROLY_KEY);
 	return Req.postRequest('CreateBackup', {}, serverId);
 }
 

@@ -275,7 +275,7 @@ const getUrl = (request: string, host: string, data: any, _data: any): string =>
 		case "GetNummericIP": case "GetServerPort": case "GetServerIPAlias":
 			return host + "/api/client/servers/" + data;
 		case "StartServer": case "StopServer": case "KillServer": case "RestartServer":
-			return host + "/api/client/servers/" + data + "/power";
+			return host + "/api/client/servers/" + _data + "/power";
 		case "SendCommand":
 			return host + "/api/client/servers/" + data + "/command";
 
