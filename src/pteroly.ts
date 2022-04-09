@@ -56,9 +56,4 @@ const functions = {
 	Admin: app,
 };
 
-functions.Admin.fastLogin("http://192.168.178.47/", "TwEgJyamx7LSdAfatKOIGWLTehMELkS8wt5zFTusk3VBbnHP");
-(async () => {
-    console.log(await functions.Admin.listServers(-1));
-})()
-
 export = functions;
