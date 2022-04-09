@@ -1,13 +1,13 @@
 ﻿[![npm](https://img.shields.io/npm/v/pteroly)](https://www.npmjs.com/package/pteroly)
-[![GitHub](https://img.shields.io/github/license/EiskalterFreund/pteroly)](https://github.com/EiskalterFreund/pteroly/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/EiskalterFreund/pteroly)](https://github.com/EiskalterFreund/pteroly/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/EiskalterFreund/pteroly)](https://github.com/EiskalterFreund/pteroly/pulls)
+[![GitHub](https://img.shields.io/github/license/OnFire124/pteroly)](https://github.com/OnFire124/pteroly/blob/main/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/OnFire124/pteroly)](https://github.com/OnFire124/pteroly/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/OnFire124/pteroly)](https://github.com/OnFire124/pteroly/pulls)
 
 # Pteroly
 With pteroly you can easily control your Pterodactyl panel quick and easy with a flawless experience and good support.
 Pteroly is always up-to-date and supports the latest versions of the Pterodactyl panel.
 
-[Pteroly Documentation](https://pteroly.purenodes.net/)
+[Pteroly Documentation](https://pteroly.fyreblitz.com/)
 | [NpmJS Package](https://www.npmjs.com/package/pteroly/)
 | [Pteroly PayPal](https://paypal.me/PureNodes)
 | Discord: Soon™️
@@ -41,7 +41,7 @@ Then you require the package and login into the Pterodactyl API:
 	    console.log('Login status Client: ' + loggedIn);
 	    if (!loggedIn) console.error(errorMsg);
     });
-   And then you can call any function you want like this, to find all the functions of the panel consider visiting our [documentation](https://pteroly.purenodes.net/).
+   And then you can call any function you want like this, to find all the functions of the panel consider visiting our [documentation](https://pteroly.fyreblitz.com/).
    
 
     // As a .then function
