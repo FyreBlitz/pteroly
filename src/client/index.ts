@@ -49,6 +49,7 @@ import del from "./methods/delete";
 function login(host: string, key: string, callback: any) {
 	host = host.trim()
 	if(host.endsWith("/")) host = host.slice(0, -1);
+	host = host.replace("localhost", "127.0.0.1");
 
 	process.env.CLIENT_PTEROLY_HOST = host;
 	process.env.CLIENT_PTEROLY_KEY = key;
@@ -60,7 +61,7 @@ function login(host: string, key: string, callback: any) {
 			"Accept": "Application/vnd.pterodactyl.v1+json",
 		},
 	}).then(function(response) {
-		if (response.status == 404) {
+		if (response?.status == 404) {
 			callback(false, "API Key is not valid! (Client)");
 		} else {
 			callback(true);

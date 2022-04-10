@@ -37,12 +37,13 @@ const pjson = require('../package.json');
                 updateInfo = "Bug Fixes/New Features/More";
             }
 
-            console.log("| Pteroly");
-            console.log("A new " + updateType + " for Pteroly is available! (" + updateInfo + ")");
-            console.log("You can install it using: npm i pteroly@" + res.data["dist-tags"].latest);
-            console.log("");
-            console.log("Current: " + pjson.version + "\nLatest: " + res.data["dist-tags"].latest);
-            console.log("");
+            console.warn("!=== Pteroly ===!");
+            console.warn("A new " + updateType + " for Pteroly is available! (" + updateInfo + ")");
+            console.warn("You can install it using: npm i pteroly@" + res.data["dist-tags"].latest);
+            console.warn("");
+            console.warn("Current: " + pjson.version);
+            console.warn("Latest: " + res.data["dist-tags"].latest);
+            console.warn("!=== Pteroly ===!");
         }
     }).catch((err) => {
         console.log("| Pteroly");

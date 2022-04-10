@@ -56,3 +56,15 @@ Then you require the package and login into the Pterodactyl API:
     // With await
     const resultAdmin = await admin.functionName(<ARGUMENTS>).catch((err) => console.error(err));
     const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
+
+# Changelog
+Version 1.6.5:
+- Fixed using localhost as the HOST
+- Fixed UserQuery
+- Fixed ListUsers
+- Fixed Unpagination of Listing users.
+- Made the version checker console-stamp and console-stamp-color friendly.
+
+# ToDo list
+ - [ ] Class support and support of new instances
+ - [ ] More features (please suggest features on GitHub)

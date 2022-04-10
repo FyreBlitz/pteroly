@@ -41,6 +41,8 @@ class ApplicationRequest {
 		}).then((response) => {
 			if (request.startsWith("List"))
 				return response.data.data;
+			if (request == "UserQuery")
+				return response.data.data[0].attributes;
 			return response.data.attributes;
 		}).catch((err) => {
 			const error = createError(request, err, data);
@@ -216,6 +218,8 @@ const getUrl = (request: string, host: string, data: any, _data: any) => { // _d
 		case "EditUser": case "DeleteUser": case "UserDetails":
 			if (_data != null) return host + "/api/application/users/" + _data;
 			return host + "/api/application/users/" + data;
+		case "UserQuery":
+			return host + "/api/application/users?filter=" + data;
 		case "CreateUser": case "ListUsers":
 			if (_data != null && _data >= 0) return host + "/api/application/users?page=" + _data;
 			if (_data == -1) return "users";
