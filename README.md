@@ -10,7 +10,7 @@ Pteroly is always up-to-date and supports the latest versions of the Pterodactyl
 [Pteroly Documentation](https://pteroly.fyreblitz.com/)
 | [NpmJS Package](https://www.npmjs.com/package/pteroly/)
 | [Pteroly PayPal](https://paypal.me/PureNodes)
-| Discord: Soon™️
+| [Pteroly Discord](https://discord.gg/8dUwGewqfv)
 
 <u>Benefits of Pteroly:</u>
  - [x] Supports latest Pterodactyl panel
