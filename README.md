@@ -1,7 +1,7 @@
 ﻿[![npm](https://img.shields.io/npm/v/pteroly)](https://www.npmjs.com/package/pteroly)
-[![GitHub](https://img.shields.io/github/license/OnFire124/pteroly)](https://github.com/OnFire124/pteroly/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/OnFire124/pteroly)](https://github.com/OnFire124/pteroly/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/OnFire124/pteroly)](https://github.com/OnFire124/pteroly/pulls)
+[![GitHub](https://img.shields.io/github/license/FyreBlitz/pteroly)](https://github.com/FyreBlitz/pteroly/blob/main/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/FyreBlitz/pteroly)](https://github.com/FyreBlitz/pteroly/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/FyreBlitz/pteroly)](https://github.com/FyreBlitz/pteroly/pulls)
 
 # Pteroly
 With pteroly you can easily control your Pterodactyl panel quick and easy with a flawless experience and good support.
@@ -58,7 +58,7 @@ Then you require the package and login into the Pterodactyl API:
     const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
 
 # Changelog
-Version 1.6.7:
+Version 1.6.7/1.6.8:
 - Fixed listing nodes
 - Fixed wrong env vars
 - Fixed using localhost as the HOST
