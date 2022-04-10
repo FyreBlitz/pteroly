@@ -58,7 +58,9 @@ Then you require the package and login into the Pterodactyl API:
     const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
 
 # Changelog
-Version 1.6.6 + 1.6.5:
+Version 1.6.7:
+- Fixed listing nodes
+- Fixed wrong env vars
 - Fixed using localhost as the HOST
 - Fixed UserQuery
 - Fixed ListUsers
