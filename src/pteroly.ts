@@ -46,9 +46,9 @@ const pjson = require('../package.json');
             console.warn("!=== Pteroly ===!");
         }
     }).catch((err) => {
-        console.log("| Pteroly");
-        console.log("Couldn't check for Updates, are you Offline?");
-        console.log("");
+        console.warn("!=== Pteroly ===!");
+        console.warn("Couldn't check for Updates, are you Offline?");
+        console.warn("!=== Pteroly ===!");
     });
 })();
 

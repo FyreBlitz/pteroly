@@ -43,6 +43,12 @@ import createlocation from "./methods/locations/createLocation";
 import updatelocation from "./methods/locations/updateLocation";
 import locationdetails from "./methods/locations/locationDetails";
 
+// Nests
+import eggdetails from "./methods/nests/eggDetails";
+import nestdetails from "./methods/nests/nestDetails";
+import listeggs from "./methods/nests/listEggs";
+import listnests from "./methods/nests/listNests";
+
 // Other
 import post from "./methods/post";
 import patch from "./methods/patch";
@@ -145,6 +151,12 @@ const functions = {
 	listAllocations: listallocations,
 	deleteAllocation: deleteallocation,
 	createAllocation: createallocation,
+
+	// Nests
+	listEggs: listeggs,
+	listNests: listnests,
+	eggDetails: eggdetails,
+	nestDetails: nestdetails,
 
 	// Other
 	post: post,
