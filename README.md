@@ -58,11 +58,8 @@ Then you require the package and login into the Pterodactyl API:
     const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
 
 # Changelog
-Version 1.7.0:
-- Added list eggs
-- Added list nests
-- Added nest details
-- Added egg details
+Version 1.7.1:
+- fixed listing nodes (again).
 
 # ToDo list
  - [ ] Class support and support of new instances
