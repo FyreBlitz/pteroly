@@ -25,7 +25,7 @@ interface serverData {
 	},
 	feature_limits: {
 		databases: number,
-		allocations: number,
+		allocations: any,
 		backups: number,
 	},
 	start_on_completion: true | boolean,
@@ -122,7 +122,7 @@ function makeData(serverData: serverData) {
 		},
 		'feature_limits': {
 			'databases': serverData.feature_limits.databases,
-			'allocations': serverData.feature_limits.allocations + 1,
+			'allocations': `${(parseInt(serverData.feature_limits.allocations) + 1)}`,
 			'backups': serverData.feature_limits.backups,
 		},
 		'environment': {

@@ -58,8 +58,8 @@ Then you require the package and login into the Pterodactyl API:
     const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
 
 # Changelog
-Version 1.7.1:
-- fixed listing nodes (again).
+Version 1.7.2:
+- Fixed bug in server creation that adds "1" as a string to a servers allocations.
 
 # ToDo list
  - [ ] Class support and support of new instances
