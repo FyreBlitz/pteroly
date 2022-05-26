@@ -36,6 +36,7 @@ interface serverData {
 	start_on_completion: true | boolean,
 	skip_scripts: false | boolean,
 	oom_disabled: true | boolean,
+	optionalEnv: JSON,
 };
 
 
@@ -81,13 +82,6 @@ interface returnType {
 	"nest": number,
 	"egg": number,
 	"pack": any | null,
-	"environment": {
-		"SRCDS_MAP": any,
-		"SRCDS_APPID": any,
-		"MAX_PLAYERS": any,
-		"TICKRATE": any,
-		"LUA_REFRESH": any,
-	},
 	"container": {
 		"startup_command": string,
 		"image": string,
@@ -96,13 +90,6 @@ interface returnType {
 			"SERVER_JARFILE": string,
 			"VANILLA_VERSION": string,
 			"STARTUP": string,
-			"P_SERVER_LOCATION": string,
-			"P_SERVER_UUID": string,
-			"SRCDS_MAP": any,
-			"SRCDS_APPID": any,
-			"MAX_PLAYERS": any,
-			"TICKRATE": any,
-			"LUA_REFRESH": any,
 		}
 	},
 	"updated_at": string,
@@ -194,6 +181,7 @@ function makeData(serverData: serverData) {
 			'YOUTUBE_API_KEY': '.',
 			'DISCORD_BOT_TOKEN': '.',
 			'PMMP_VERSION': serverData.version,
+			...serverData.optionalEnv,
 		},
 		'allocation': {
 			'default': serverData.defaultAllocation,
