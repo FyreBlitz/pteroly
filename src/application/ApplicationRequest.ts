@@ -226,7 +226,10 @@ const getUrl = (request: string, host: string, data: any, _data: any) => { // _d
 			return host + "/api/application/users";
 		
 		// Server actions
-		case "ListServers": case "CreateServer":
+		case "CreateServer":
+			if (_data != null) return host + "/api/application/servers?node=" + _data;
+			return host + "/api/application/servers";
+		case "ListServers": 
 			if (_data != null && _data >= 0) return host + "/api/application/servers?page=" + _data;
 			if (_data == -1) return "servers";
 			return host + "/api/application/servers";

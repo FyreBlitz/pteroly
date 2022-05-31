@@ -14,31 +14,24 @@ const pjson = require('../package.json');
             // Bug Codes
             var bugCodeNew = parseInt(latest.toString()[2]);
             var bugCodeOld = parseInt(version.toString()[2]);
+
             // Update Codes
             var updCodeNew = parseInt(latest.toString()[1]);
             var updCodeOld = parseInt(version.toString()[1]);
+
             // Release Codes
             var relCodeNew = parseInt(latest.toString()[0]);
             var relCodeOld = parseInt(version.toString()[0]);
+
             // Info
             var updateType = "update";
-            var updateInfo = "Bug Fixes";
 
-            if (bugCodeNew > bugCodeOld) {
-                updateType = "bug fix";
-                updateInfo = "Bug Fixes";
-            }
-            if (updCodeNew > updCodeOld) {
-                updateType = "feature update";
-                updateInfo = "Bug Fixes/new Features";
-            }
-            if (relCodeNew > relCodeOld) {
-                updateType = "revision";
-                updateInfo = "Bug Fixes/New Features/More";
-            }
+            if (bugCodeNew > bugCodeOld) updateType = "bug fix";
+            if (updCodeNew > updCodeOld) updateType = "feature update";
+            if (relCodeNew > relCodeOld) updateType = "major update";
 
             console.warn("!=== Pteroly ===!");
-            console.warn("A new " + updateType + " for Pteroly is available! (" + updateInfo + ")");
+            console.warn("A new " + updateType + " for Pteroly is available!");
             console.warn("You can install it using: npm i pteroly@" + res.data["dist-tags"].latest);
             console.warn("");
             console.warn("Current: " + pjson.version);
@@ -47,7 +40,7 @@ const pjson = require('../package.json');
         }
     }).catch((err) => {
         console.warn("!=== Pteroly ===!");
-        console.warn("Couldn't check for Updates, are you Offline?");
+        console.warn("Couldn't check for updates, are you offline?");
         console.warn("!=== Pteroly ===!");
     });
 })();

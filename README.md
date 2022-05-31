@@ -58,8 +58,9 @@ Then you require the package and login into the Pterodactyl API:
     const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
 
 # Changelog
-Version 1.7.5:
-- Fixed GMOD server creation
+Version 1.8.0:
+- Fixed multiple node server creation
+- Added custom env vars for server creation
 
 # ToDo list
  - [ ] Class support and support of new instances

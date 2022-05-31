@@ -12,6 +12,7 @@ interface serverData {
 	nodeId: number,
 	userId: number,
 	defaultAllocation: number,
+	additionalAllocations: number[],
 	version: versionType,
 	eggId: number,
 	startup: string,
@@ -36,7 +37,6 @@ interface serverData {
 	start_on_completion: true | boolean,
 	skip_scripts: false | boolean,
 	oom_disabled: true | boolean,
-	optionalEnv: JSON,
 };
 
 
@@ -102,13 +102,14 @@ interface returnType {
 	}
 };
 
-function createServer(serverData: serverData): Promise<returnType> {
-	const data = makeData(serverData);
+function createServer(serverData: serverData, envVars = {}): Promise<returnType> {
+	const data = makeData(serverData, envVars);
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
-	return Req.postRequest('CreateServer', data, null);
+
+	return Req.postRequest('CreateServer', data, serverData.nodeId);
 }
 
-function makeData(serverData: serverData) {
+function makeData(serverData: serverData, envVars = {}) {
 	return {
 		'name': serverData.name,
 		'user': serverData.userId,
@@ -181,10 +182,11 @@ function makeData(serverData: serverData) {
 			'YOUTUBE_API_KEY': '.',
 			'DISCORD_BOT_TOKEN': '.',
 			'PMMP_VERSION': serverData.version,
-			...serverData.optionalEnv,
+			...envVars,
 		},
 		'allocation': {
 			'default': serverData.defaultAllocation,
+			'additional': serverData.additionalAllocations,
 		},
 		'start_on_completion': serverData.start_on_completion,
 		'skip_scripts': serverData.skip_scripts,
