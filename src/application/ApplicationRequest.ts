@@ -40,10 +40,12 @@ class ApplicationRequest {
 			},
 		}).then((response) => {
 			if (request.startsWith("List"))
-				return response.data.data;
+				if (_data === true) return response.data;
+				else return response.data.data;
 			if (request == "UserQuery")
 				return response.data.data[0].attributes;
-			return response.data.attributes;
+			if (_data === true) return response.data;
+			else return response.data.data;
 		}).catch((err) => {
 			const error = createError(request, err, data);
 			if (error) throw error;

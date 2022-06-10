@@ -69,9 +69,9 @@ interface returnType {
 	}
 }
 
-function serverDetails(serverId: number): Promise<returnType> {
+function serverDetails(serverId: number, showExtra: boolean): Promise<returnType> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY)
-	return Req.getRequest('ServerDetails', serverId, null);
+	return Req.getRequest('ServerDetails', serverId, showExtra);
 }
 
 export default serverDetails;

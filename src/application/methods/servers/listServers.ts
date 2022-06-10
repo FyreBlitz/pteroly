@@ -72,9 +72,9 @@ interface returnType {
 	}
 }
 
-function listServers(page: number): Promise<returnType[]> {
+function listServers(page: number, showExtra: boolean): Promise<returnType[]> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY)
-	return Req.getRequest('ListServers', null, page);
+	return Req.getRequest('ListServers', showExtra, page);
 }
 
 export default listServers;
