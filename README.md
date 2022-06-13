@@ -58,8 +58,11 @@ Then you require the package and login into the Pterodactyl API:
     const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
 
 # Changelog
-Version 1.7.7:
-- Added a extra "showExtra" flag to .serverDetails(serverId, showExtra) and .listServers(page, showExtra).
+Version 1.7.8:
+- Fixed `admin.userDetails(ID)` to return undefined.
+- Added warning message when a new major update is out to the update notifier.
+- Major update notifications now only show once since they could break your code.
+- 
 
 # ToDo list
  - [ ] Class support and support of new instances (with v2.0.0).

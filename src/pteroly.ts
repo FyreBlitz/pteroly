@@ -1,5 +1,6 @@
 import * as app from "./application/index";
 import * as client from "./client/index";
+import * as fs from "fs";
 import axios from "axios";
 const pjson = require('../package.json');
 
@@ -30,13 +31,22 @@ const pjson = require('../package.json');
             if (updCodeNew > updCodeOld) updateType = "feature update";
             if (relCodeNew > relCodeOld) updateType = "major update";
 
+            if (updateType === "major update"
+            && fs.readFileSync("./updateNotify.cfg", "utf8") === `V:${relCodeNew};SHOWED:true`) 
+                return;
+
             console.warn("!=== Pteroly ===!");
-            console.warn("A new " + updateType + " for Pteroly is available!");
+            if (updateType != "major update") console.warn("A new " + updateType + " for Pteroly is available!");
+            else console.warn("A new " + updateType + " for Pteroly is available (WARNING: UPDATING TO IT MIGHT BREAK CODE)!");
             console.warn("You can install it using: npm i pteroly@" + res.data["dist-tags"].latest);
             console.warn("");
             console.warn("Current: " + pjson.version);
             console.warn("Latest: " + res.data["dist-tags"].latest);
-            console.warn("!=== Pteroly ===!");
+            if (updateType === "major update") {
+                console.warn("Note: This update message will only show up once.");
+                fs.writeFileSync(`./updateNotify.cfg`, `V:${relCodeNew};SHOWED:true`);
+            }
+            console.warn("!=== Pteroly ===!");   
         }
     }).catch((err) => {
         console.warn("!=== Pteroly ===!");
