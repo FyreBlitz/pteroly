@@ -62,7 +62,7 @@ Version 1.7.8:
 - Fixed `admin.userDetails(ID)` to return undefined.
 - Added warning message when a new major update is out to the update notifier.
 - Major update notifications now only show once since they could break your code.
-- 
+- Added a config.cfg in pteroly/lib in the modules folder to enable/disable notifications
 
 # ToDo list
  - [ ] Class support and support of new instances (with v2.0.0).
