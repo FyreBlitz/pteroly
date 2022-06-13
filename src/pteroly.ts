@@ -4,6 +4,11 @@ import * as fs from "fs";
 import axios from "axios";
 const pjson = require('../package.json');
 
+function parseCfg(cfgString: string) {
+    let cfg = {};
+    
+}
+
 (() => {
     axios({
         method: 'get',
@@ -32,7 +37,7 @@ const pjson = require('../package.json');
             if (relCodeNew > relCodeOld) updateType = "major update";
 
             if (updateType === "major update"
-            && fs.readFileSync("./updateNotify.cfg", "utf8") === `V:${relCodeNew};SHOWED:true`) 
+            && fs.readFileSync("./updateNotify.cfg", "utf8").split(",") === `V:${relCodeNew};SHOWED:true`) 
                 return;
 
             console.warn("!=== Pteroly ===!");
