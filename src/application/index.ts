@@ -167,8 +167,8 @@ const functions = {
 };
 
 (async () => {
-	await fastLogin("https://devpanel.fyreblitz.com/", "cNMoT0bRmEg7vZz4mznM96aQUTSSb66KAZQOhtM6RKzH0RUW");
-	console.log((await functions.userDetails(1)));
+	// await fastLogin("https://devpanel.fyreblitz.com/", "cNMoT0bRmEg7vZz4mznM96aQUTSSb66KAZQOhtM6RKzH0RUW");
+	// console.log((await functions.userDetails(2)));
 })();
 
 export = functions;
