@@ -27,6 +27,7 @@ interface returnType {
 	"identifier": string,
 	"name": string,
 	"description": string,
+	"status": string,
 	"suspended": boolean,
 	"limits": {
 		"memory": number,

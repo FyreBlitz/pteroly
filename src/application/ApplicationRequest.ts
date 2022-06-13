@@ -45,7 +45,7 @@ class ApplicationRequest {
 			if (request == "UserQuery")
 				return response.data.data[0].attributes;
 			if (_data === true) return response.data;
-			else return response.data.data;
+			else return response.data.attributes;
 		}).catch((err) => {
 			const error = createError(request, err, data);
 			if (error) throw error;
@@ -95,7 +95,7 @@ class ApplicationRequest {
 	}
 
 	deleteRequest = (request: string, data: any, _data: any): Promise<any> => {
-		const url = getUrl(request, this.host, data, _data); // data is nullable
+		const url = getUrl(request, this.host, data, _data); // _data is nullable
 		
 		return axios({
 			url: url,

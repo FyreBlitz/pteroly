@@ -165,4 +165,10 @@ const functions = {
 	put: put,
 	delete: del,
 };
+
+(async () => {
+	await fastLogin("https://devpanel.fyreblitz.com/", "cNMoT0bRmEg7vZz4mznM96aQUTSSb66KAZQOhtM6RKzH0RUW");
+	console.log((await functions.userDetails(1)));
+})();
+
 export = functions;

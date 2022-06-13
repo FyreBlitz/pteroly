@@ -6,7 +6,8 @@
   "types": "lib/pteroly.d.ts",
   "funding": "https://paypal.me/PureNodes",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "start": "tsc && node lib/pteroly.js"
   },
   "repository": {
     "type": "git",
