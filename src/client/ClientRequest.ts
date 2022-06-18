@@ -277,7 +277,7 @@ const getUrl = (request: string, host: string, data: any, _data: any): string =>
 		case "StartServer": case "StopServer": case "KillServer": case "RestartServer":
 			return host + "/api/client/servers/" + _data + "/power";
 		case "SendCommand":
-			return host + "/api/client/servers/" + data + "/command";
+			return host + "/api/client/servers/" + _data + "/command";
 
 		// Backups
 		case "CreateBackup": case "ListBackups":
