@@ -3,7 +3,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/FyreBlitz/pteroly)](https://github.com/FyreBlitz/pteroly/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/FyreBlitz/pteroly)](https://github.com/FyreBlitz/pteroly/pulls)
 [![Build](https://github.com/FyreBlitz/pteroly/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/FyreBlitz/pteroly/actions/workflows/node.js.yml)
-
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/FyreBlitz/pteroly/node.js.yml)
 # Pteroly
 With pteroly you can easily control your Pterodactyl panel quick and easy with a flawless experience and good support.
 Pteroly is always up-to-date and supports the latest versions of the Pterodactyl panel.
