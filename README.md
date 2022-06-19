@@ -15,11 +15,13 @@ Pteroly is always up-to-date and supports the latest versions of the Pterodactyl
 
 <u>Benefits of Pteroly:</u>
  - [x] Supports latest Pterodactyl panel
- - [x] Supports nearily every api feature of pterodactyl
+ - [x] Supports nearly every API function of pterodactyl
  - [x] Easy client panel login, which is only required once
  - [x] Up-to-Date
  - [x] Easy-to-Use
  - [x] Typescript
+ - [x] Stable
+ - [x] Maintained
  - [x] Fast
 
 ## Quick Start Guide
@@ -33,12 +35,12 @@ Then you require the package and login into the Pterodactyl API:
     const client = pteroly.Client;
     
     // You only need to login once in your entire app/project
-    admin.login('HOST_PANEL_URL', 'YOUR_ADMIN_API_KEY', (loggedIn, errorMsg) => {
+    admin.login('HOST_PANEL_URL', 'YOUR-ADMIN-API-KEY', (loggedIn, errorMsg) => {
 	    console.log('Login status Admin: ' + loggedIn);
 	    if (!loggedIn) console.error(errorMsg);
     });
 
-    client.login('HOST_PANEL_URL', 'YOUR_CLIENT_API_KEY', (loggedIn, errorMsg) => {
+    client.login('HOST_PANEL_URL', 'YOUR-CLIENT-API-KEY', (loggedIn, errorMsg) => {
 	    console.log('Login status Client: ' + loggedIn);
 	    if (!loggedIn) console.error(errorMsg);
     });
@@ -46,17 +48,17 @@ Then you require the package and login into the Pterodactyl API:
    
 
     // As a .then function
-    admin.functionName(<ARGUMENTS>).then((response) => {
+    admin.functionName(...arguments).then((response) => {
         // TODO: Insert your code here.
     }).catch((err) => console.error(err));
 
-    client.functionName(<ARGUMENTS>).then((response) => {
+    client.functionName(...arguments).then((response) => {
         // TODO: Insert your code here.
     }).catch((err) => console.error(err));
     
     // With await
-    const resultAdmin = await admin.functionName(<ARGUMENTS>).catch((err) => console.error(err));
-    const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
+    const resultAdmin = await admin.functionName(...arguments).catch((err) => console.error(err));
+    const resultClient = await client.functionName(...arguments).catch((err) => console.error(err));
 
 # Changelog
 Version 1.8.5:
