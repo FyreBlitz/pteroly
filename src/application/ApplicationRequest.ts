@@ -1,10 +1,10 @@
 import axios from "axios";
 
 class ApplicationRequest {
-	public host: any;
-	public key: any;
+	public host: string | undefined;
+	public key: string | undefined;
 
-	constructor(host: any, key: any) {
+	constructor(host: string | undefined, key: string | undefined) {
 		this.host = host;
 		this.key = key;
 	}
@@ -16,7 +16,7 @@ class ApplicationRequest {
 		const response = await this.cGetRequest(url + "?page=" + (currentPage + 1));
 		let pageData: JSON[] = response.data;
 
-		let totalPages = response.meta.pagination.total_pages;
+		const totalPages = response.meta.pagination.total_pages;
 		currentPage = response.meta.pagination.current_page;
 		if (currentPage < totalPages) {
 			const pageDataNext = await this.getRequestUnpaginate(url)
@@ -220,7 +220,7 @@ class ApplicationRequest {
 	}
 }
 
-const getUrl = (request: string, host: string, data: any, _data: any) => { // _data = nullable
+const getUrl = (request: string | undefined, host: string | undefined, data: any, _data: any) => { // _data = nullable
 	switch (request) {		
 		// User actions
 		case "EditUser": case "DeleteUser": case "UserDetails":
@@ -325,7 +325,7 @@ const createError = (request: string, err: any, data: any) => {
 		} else {
 			return err;
 		}
-	} else if(typeof err.response != "undefined" && err.response.hasOwnProperty("data")) {
+	} else if(typeof err.response != "undefined" && err.response.data != null) {
 		return err.response.data.errors;
 	}
 }

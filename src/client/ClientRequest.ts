@@ -16,7 +16,7 @@ class ClientRequest {
 		const response = await this.cGetRequest(url + "?page=" + (currentPage + 1));
 		let pageData: JSON[] = response.data;
 
-		let totalPages = response.meta.pagination.total_pages;
+		const totalPages = response.meta.pagination.total_pages;
 		currentPage = response.meta.pagination.current_page;
 		if (totalPages> currentPage) {
 			const pageDataNext = await this.getRequestUnpaginate(url, data, _data)

@@ -8,12 +8,12 @@ type Cfg = {
     [key: string]: any;
 };
 function convertCfgToJson(cfgString: string) {
-    let cfg: Cfg = {};
-    let lines = cfgString.split("\n");
+    const cfg: Cfg = {};
+    const lines = cfgString.split("\n");
     let childTmp: Cfg = {};
     
     for (let i = 0; i < lines.length; i++) {
-        let line = lines[i].toString().replace("\r", "");
+        const line = lines[i].toString().replace("\r", "");
 
         if (line.startsWith("#")) continue;
         if (line.length == 0) continue;
@@ -41,10 +41,10 @@ function convertJsonToCfg(cfg: Cfg) {
     let cfgString = `# DON'T TOUCH THE MAJORNOTIFY CONFIG. (Automatically generated)
 # THIS CONFIG FILE IS SPACE, LINE AND NAME SENSITIVE, EDITING IT IN THE WRONG WAY POSSIBLY BREAKS IT.
 `;
-    for (let key in cfg) {
+    for (const key in cfg) {
         if (cfg[key] == "[object Object]") {
             cfgString += "\n" + key + ":\n";
-            for (let childKey in cfg[key]) {
+            for (const childKey in cfg[key]) {
                 cfgString += "  " + childKey + "=" + cfg[key][childKey] + "\n";
             }
         }
@@ -59,25 +59,25 @@ function convertJsonToCfg(cfg: Cfg) {
         method: 'get',
         url: 'https://registry.npmjs.com/pteroly',
     }).then((res) => {
-        var version = parseInt(pjson.version.split(".").join(""));
-        var latest = parseInt(res.data["dist-tags"].latest.split(".").join(""));
+        const version = parseInt(pjson.version.split(".").join(""));
+        const latest = parseInt(res.data["dist-tags"].latest.split(".").join(""));
         if (latest > version) {
             // Bug Codes
-            var bugCodeNew = parseInt(latest.toString()[2]);
-            var bugCodeOld = parseInt(version.toString()[2]);
+            const bugCodeNew = parseInt(latest.toString()[2]);
+            const bugCodeOld = parseInt(version.toString()[2]);
             
             // Update Codes
-            var updCodeNew = parseInt(latest.toString()[1]);
-            var updCodeOld = parseInt(version.toString()[1]);
+            const updCodeNew = parseInt(latest.toString()[1]);
+            const updCodeOld = parseInt(version.toString()[1]);
             
             // Release Codes
-            var relCodeNew = parseInt(latest.toString()[0]);
-            var relCodeOld = parseInt(version.toString()[0]);
+            const relCodeNew = parseInt(latest.toString()[0]);
+            const relCodeOld = parseInt(version.toString()[0]);
             
             // Info
-            var updateType = "update";
+            let updateType = "update";
             
-            let cfgAsJson = convertCfgToJson(fs.readFileSync(__dirname + "\\config.cfg", "utf8"));
+            const cfgAsJson = convertCfgToJson(fs.readFileSync(__dirname + "\\config.cfg", "utf8"));
 
             if (bugCodeNew > bugCodeOld) {
                 if (cfgAsJson["VERSIONNOTIFY"]["notifyBugFixes"] == "no") return;
@@ -107,12 +107,12 @@ function convertJsonToCfg(cfg: Cfg) {
                 
                 cfgAsJson["MAJORNOTIFY"]["versionNumber"] = relCodeNew;
                 cfgAsJson["MAJORNOTIFY"]["shown"] = "yes";
-                let jsonAsCfg = convertJsonToCfg(cfgAsJson);
+                const jsonAsCfg = convertJsonToCfg(cfgAsJson);
                 fs.writeFileSync(`./config.cfg`, jsonAsCfg);
             }
             console.warn("!=== Pteroly ===!");   
         }
-    }).catch((err) => {
+    }).catch(() => {
         console.warn("!=== Pteroly ===!");
         console.warn("Couldn't check for updates, are you offline?");
         console.warn("!=== Pteroly ===!");

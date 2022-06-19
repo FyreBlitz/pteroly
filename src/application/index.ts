@@ -61,7 +61,7 @@ import del from "./methods/delete";
  * @param {String} key Key to use
  * @param {Boolean, String} callback Returns true when login is successful
  */
-function login(host: string, key: string, callback: any) {
+function login(host: string, key: string, callback: (status: boolean, message: string) => any) {
 	host = host.trim();
 	if(host.endsWith("/")) host = host.slice(0, -1);
 	host = host.replace("localhost", "127.0.0.1");
@@ -76,12 +76,12 @@ function login(host: string, key: string, callback: any) {
 			"Content-Type": "application/json",
 			"Accept": "Application/vnd.pterodactyl.v1+json",
 		},
-	}).then(function(response: any) {
+	}).then((response: any) => {
 		if (response?.status == 404) {
 			callback(false, "API Key is not valid! (Application)");
 			return;
 		}
-		callback(true);
+		callback(true, "");
 	}).catch((error: any) => {
 		if (error?.response?.status == 403) {
 			callback(false, "API Key is not valid! (Application)");

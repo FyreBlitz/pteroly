@@ -30,7 +30,7 @@ import sendcommand from "./methods/serverActions/sendCommand";
 // Backups
 import createbackup from "./methods/backups/createBackup";
 import deletebackup from "./methods/backups/deleteBackup";
-import downloadbackup from "./methods/backups/downloadBackup";
+// import downloadbackup from "./methods/backups/downloadBackup";
 import listbackups from "./methods/backups/listBackups";
 import backupdetails from "./methods/backups/backupDetails";
 
@@ -66,7 +66,7 @@ function login(host: string, key: string, callback: any) {
 		} else {
 			callback(true);
 		}
-	}).catch(error => {
+	}).catch(() => {
 		callback(false, "API Key is not valid! (Client)");
 	});
 }
