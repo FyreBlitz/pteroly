@@ -1,7 +1,8 @@
-﻿[![npm](https://img.shields.io/npm/v/pteroly)](https://www.npmjs.com/package/pteroly)
+﻿[![Npmjs](https://img.shields.io/npm/v/pteroly)](https://www.npmjs.com/package/pteroly)
 [![GitHub](https://img.shields.io/github/license/FyreBlitz/pteroly)](https://github.com/FyreBlitz/pteroly/blob/main/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/FyreBlitz/pteroly)](https://github.com/FyreBlitz/pteroly/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/FyreBlitz/pteroly)](https://github.com/FyreBlitz/pteroly/pulls)
+[![Build](https://github.com/FyreBlitz/pteroly/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/FyreBlitz/pteroly/actions/workflows/node.js.yml)
 
 # Pteroly
 With pteroly you can easily control your Pterodactyl panel quick and easy with a flawless experience and good support.
