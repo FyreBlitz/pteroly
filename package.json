@@ -6,7 +6,8 @@
   "types": "lib/pteroly.d.ts",
   "funding": "https://paypal.me/PureNodes",
   "scripts": {
-    "build": "tsc && copy .\\src\\config.cfg .\\lib\\config.cfg",
+    "build": "tsc",
+    "buildandcopy": "tsc && copy .\\src\\config.cfg .\\lib\\config.cfg",
     "start": "tsc && cd .\\lib && node pteroly.js",
     "lint": "eslint . --ext .ts",
     "test": "ts-mocha -p tsconfig.json src/application/** src/client/**"
