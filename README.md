@@ -58,8 +58,9 @@ Then you require the package and login into the Pterodactyl API:
     const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
 
 # Changelog
-Version 1.7.9:
+Version 1.8.0:
 - Fixed `client.sendCommand()` to return an error
+- Added `deploy` to `admin.createServer()`.
 
 # ToDo list
  - [ ] Class support and support of new instances (with v2.0.0).
