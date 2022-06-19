@@ -17,11 +17,6 @@ interface serverData {
 	eggId: number,
 	startup: string,
 	docker_image: string,
-	SRCDS_MAP: any,
-	SRCDS_APPID: any,
-	MAX_PLAYERS: any,
-	TICKRATE: any,
-	LUA_REFRESH: any,
 	limits: {
 		cpu: number,
 		memory: number,
@@ -34,6 +29,7 @@ interface serverData {
 		allocations: any,
 		backups: number,
 	},
+	deploy: JSON,
 	start_on_completion: true | boolean,
 	skip_scripts: false | boolean,
 	oom_disabled: true | boolean,
@@ -94,6 +90,7 @@ interface returnType {
 	},
 	"updated_at": string,
 	"created_at":  string,
+	"deploy": JSON,
 	"relationships": {
 		"databases": {
 			"object": string,
@@ -102,14 +99,14 @@ interface returnType {
 	}
 };
 
-function createServer(serverData: serverData, envVars = {}): Promise<returnType> {
-	const data = makeData(serverData, envVars);
+function createServer(serverData: serverData, environment = {}): Promise<returnType> {
+	const data = makeData(serverData, environment);
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
 
 	return Req.postRequest('CreateServer', data, serverData.nodeId);
 }
 
-function makeData(serverData: serverData, envVars = {}) {
+function makeData(serverData: serverData, environment = {}) {
 	return {
 		'name': serverData.name,
 		'user': serverData.userId,
@@ -159,11 +156,6 @@ function makeData(serverData: serverData, envVars = {}) {
 			'NUKKIT_VERSION': serverData.version,
 			'JARFILE': 'bot.jar',
 			'VERSION': serverData.version,
-			"SRCDS_MAP": serverData.SRCDS_MAP,
-			"SRCDS_APPID": serverData.SRCDS_APPID,
-			"MAX_PLAYERS": serverData.MAX_PLAYERS,
-			"TICKRATE": serverData.TICKRATE,
-			"LUA_REFRESH": serverData.LUA_REFRESH,
 			'QUERY_PORT': '10101',
 			'FILE_PORT': '303030',
 			'SERVER_MOTD': 'TeaSpeak\n\rHosted on PureNodes!',
@@ -182,12 +174,13 @@ function makeData(serverData: serverData, envVars = {}) {
 			'YOUTUBE_API_KEY': '.',
 			'DISCORD_BOT_TOKEN': '.',
 			'PMMP_VERSION': serverData.version,
-			...envVars,
+			...environment,
 		},
 		'allocation': {
 			'default': serverData.defaultAllocation,
 			'additional': serverData.additionalAllocations,
 		},
+		"deploy": serverData.deploy,
 		'start_on_completion': serverData.start_on_completion,
 		'skip_scripts': serverData.skip_scripts,
 		'oom_disabled': serverData.oom_disabled,

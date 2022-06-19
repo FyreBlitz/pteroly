@@ -115,8 +115,10 @@ class ApplicationRequest {
 	}
 
 	
-	cPostRequest = (path: string, body: JSON) => {
+	cPostRequest = (path: string, body: any) => {
 		const url: string = this.host + "/api/application/" + path;
+		var body = body;
+		if (typeof body != "string") body = JSON.stringify(body);
 		
 		return axios({
 			url: url,
@@ -135,8 +137,10 @@ class ApplicationRequest {
 		});
 	}
 
-	cPatchRequest = (path: string, body: JSON) => {
+	cPatchRequest = (path: string, body: any) => {
 		const url: string = this.host + "/api/application/" + path;
+		var body = body;
+		if (typeof body != "string") body = JSON.stringify(body);
 		
 		return axios({
 			url: url,
@@ -193,8 +197,10 @@ class ApplicationRequest {
 		});
 	}
 
-	cPutRequest = (path: string, body: JSON) => {
+	cPutRequest = (path: string, body: any) => {
 		const url: string = this.host + "/api/application/" + path;
+		var body = body;
+		if (typeof body != "string") body = JSON.stringify(body);
 		
 		return axios({
 			url: url,
