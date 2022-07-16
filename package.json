@@ -1,10 +1,11 @@
 {
   "name": "pteroly",
-  "version": "1.8.5",
+  "version": "2.0.0",
   "description": "A fast typescript Node.JS API wrapper for the Pterodactyl Panel working with the latest version and with lots of features",
   "main": "lib/pteroly.js",
   "types": "lib/pteroly.d.ts",
   "funding": "https://paypal.me/PureNodes",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "buildandcopy": "tsc && copy .\\src\\config.cfg .\\lib\\config.cfg",
@@ -27,7 +28,8 @@
     "javascript",
     "latest",
     "updated",
-    "fast"
+    "fast",
+    "v2"
   ],
   "author": "OnFire124",
   "license": "MIT",
@@ -37,9 +39,9 @@
   "homepage": "https://pteroly.fyreblitz.com/",
   "dependencies": {
     "@types/node": "^17.0.21",
-    "axios": "^0.26.1",
     "follow-redirects": "^1.14.9",
     "fs": "^0.0.1-security",
+    "node-fetch": "^3.2.8",
     "typescript": "^4.6.2",
     "ws": "^8.5.0"
   },

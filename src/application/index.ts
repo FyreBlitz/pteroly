@@ -1,169 +1,112 @@
-import axios from "axios";
+import Custom from "./methods/Custom.js";
+import Locations from "./methods/Locations.js";
+import Nests from "./methods/Nests.js";
+import NodeAllocations from "./methods/NodeAllocations.js";
+import Nodes from "./methods/Nodes.js";
+import ServerDatabases from "./methods/ServerDatabases.js";
+import Servers from "./methods/Servers.js";
+import Users from "./methods/Users.js";
 
-// Users
-import createuser from "./methods/users/createUser";
-import listusers from "./methods/users/listUsers";
-import userdetails from "./methods/users/userDetails";
-import userquery from "./methods/users/userQuery";
-import updateuser from "./methods/users/updateUser";
-import deleteuser from "./methods/users/deleteUser";
+// Types
+import * as CustomTypes from "./types/Custom.js";
+import * as LocationsTypes from "./types/Locations.js";
+import * as NestsTypes from "./types/Nests.js";
+import * as NodeAllocationsTypes from "./types/NodeAllocations.js";
+import * as NodesTypes from "./types/Nodes.js";
+import * as ServerDatabasesTypes from "./types/ServerDatabases.js";
+import * as ServersTypes from "./types/Servers.js";
+import * as UsersTypes from "./types/Users.js";
 
-// Servers
-import createserver from "./methods/servers/createServer";
-import listservers from "./methods/servers/listServers";
-import updatebuild from "./methods/servers/updateBuild";
-import updatedetails from "./methods/servers/updateDetails";
-import deleteserver from "./methods/servers/deleteServer";
-import suspendserver from "./methods/servers/suspendServer";
-import unsuspendserver from "./methods/servers/unsuspendServer";
-import serverdetails from "./methods/servers/serverDetails";
+interface userFilters {
 
-// Nodes
-import createnode from "./methods/nodes/createNode";
-import nodedetails from "./methods/nodes/nodeDetails";
-import listnodes from "./methods/nodes/listNodes";
-import deletenode from "./methods/nodes/deleteNode";
-
-// Databases
-import createdatabase from "./methods/databases/createDatabase";
-import resetdatabasepassword from "./methods/databases/resetDatabasePassword";
-import listdatabases from "./methods/databases/listDatabases";
-import databasedetails from "./methods/databases/databaseDetails";
-import deletedatabase from "./methods/databases/deleteDatabase";
-
-// Allocations
-import listallocations from "./methods/allocations/listAllocations";
-import deleteallocation from "./methods/allocations/deleteAllocation";
-import createallocation from "./methods/allocations/createAllocation";
-
-// Locations
-import listlocations from "./methods/locations/listLocations";
-import deletelocation from "./methods/locations/deleteLocation";
-import createlocation from "./methods/locations/createLocation";
-import updatelocation from "./methods/locations/updateLocation";
-import locationdetails from "./methods/locations/locationDetails";
-
-// Nests
-import eggdetails from "./methods/nests/eggDetails";
-import nestdetails from "./methods/nests/nestDetails";
-import listeggs from "./methods/nests/listEggs";
-import listnests from "./methods/nests/listNests";
-
-// Other
-import post from "./methods/post";
-import patch from "./methods/patch";
-import get from "./methods/get";
-import put from "./methods/put";
-import del from "./methods/delete";
-
-/**
- * @param {String} host Host to connect to
- * @param {String} key Key to use
- * @param {Boolean, String} callback Returns true when login is successful
- */
-function login(host: string, key: string, callback: (status: boolean, message: string) => any) {
-	host = host.trim();
-	if(host.endsWith("/")) host = host.slice(0, -1);
-	host = host.replace("localhost", "127.0.0.1");
-
-	process.env.APPLICATION_PTEROLY_HOST = host;
-	process.env.APPLICATION_PTEROLY_KEY = key;
-
-	axios.get(host + "/api/application/users", {
-		maxRedirects: 5,
-		headers: {
-			"Authorization": "Bearer " + key,
-			"Content-Type": "application/json",
-			"Accept": "Application/vnd.pterodactyl.v1+json",
-		},
-	}).then((response: any) => {
-		if (response?.status == 404) {
-			callback(false, "API Key is not valid! (Application)");
-			return;
-		}
-		callback(true, "");
-	}).catch((error: any) => {
-		if (error?.response?.status == 403) {
-			callback(false, "API Key is not valid! (Application)");
-			return;
-		}
-		throw error;
-	});
 }
 
-/**
- *
- * @param {String} host The host to use
- * @param {String} key The application key to use
- * @Warning USE THIS ONLY IF YOU KNOW YOUR CREDENTIALS ARE 100% CORRECT, OR THEY NEVER CHANGE
- */
-function fastLogin(host: string, key: string) {
-	host = host.trim();
-	if(host.endsWith("/")) host = host.slice(0, -1);
+export default class index {
+	private hostname: string = "";
+	private key: string = "";
 
-	process.env.APPLICATION_PTEROLY_HOST = host;
-	process.env.APPLICATION_PTEROLY_KEY = key;
-}
+	private custom: Custom;
+	private locations: Locations;
+	private nests: Nests;
+	private allocations: NodeAllocations;
+	private nodes: Nodes;
+	private databases: ServerDatabases;
+	private servers: Servers;
+	private users: Users;
 
-const functions = {
-	login: login,
-	fastLogin: fastLogin,
+	constructor(hostname: string, key: string) {
+		this.hostname = hostname;
+		this.key = key;
 
-	// Users
-	userDetails: userdetails,
-	listUsers: listusers,
-	updateUser: updateuser,
-	createUser: createuser,
-	deleteUser: deleteuser,
-	userQuery: userquery,
-
-	// Servers
-	serverDetails: serverdetails,
-	listServers: listservers,
-	createServer: createserver,
-	suspendServer: suspendserver,
-	unsuspendServer: unsuspendserver,
-	updateBuild: updatebuild,
-	updateDetails: updatedetails,
-	deleteServer: deleteserver,
-
-	// Nodes
-	nodeDetails: nodedetails,
-	listNodes: listnodes,
-	createNode: createnode,
-	deleteNode: deletenode,
+		if (this.hostname.endsWith("/")) this.hostname = this.hostname.substring(0, this.hostname.length - 1);
+		
+		this.custom = new Custom(this.hostname, this.key);
+		this.locations = new Locations(this.hostname, this.key);
+		this.nests = new Nests(this.hostname, this.key);
+		this.allocations = new NodeAllocations(this.hostname, this.key);
+		this.nodes = new Nodes(this.hostname, this.key);
+		this.databases = new ServerDatabases(this.hostname, this.key);
+		this.servers = new Servers(this.hostname, this.key);
+		this.users = new Users(this.hostname, this.key);
+	}
 	
-	// Database
-	listDatabases: listdatabases,
-	databaseDetails: databasedetails,
-	createDatabase: createdatabase,
-	resetDatabasePassword: resetdatabasepassword,
-	deleteDatabase: deletedatabase,
+	// Custom
+	get = (path: string): Promise<CustomTypes.JSON> => this.custom.get(path);
+	post = (path: string, body: CustomTypes.JSON): Promise<CustomTypes.JSON> => this.custom.post(path, body);
+	put = (path: string, body: CustomTypes.JSON): Promise<CustomTypes.JSON> => this.custom.put(path, body);
+	delete = (path: string): Promise<CustomTypes.JSON> => this.custom.delete(path);
 
 	// Locations
-	listLocations: listlocations,
-	deleteLocation: deletelocation,
-	createLocation: createlocation,
-	updateLocation: updatelocation,
-	locationDetails: locationdetails,
-
-	// Allocations
-	listAllocations: listallocations,
-	deleteAllocation: deleteallocation,
-	createAllocation: createallocation,
+	getLocations = (page: number = 1): Promise<LocationsTypes.returnList> => this.locations.list(page);
+	getLocation = (id: number): Promise<LocationsTypes.returnGet> => this.locations.get(id);
+	newLocation = (body: LocationsTypes.create): Promise<LocationsTypes.returnGet> => this.locations.create(body);
+	delLocation = (id: number): Promise<CustomTypes.msg> => this.locations.delete(id);
+	updateLocation = (id: number, body: LocationsTypes.update): Promise<LocationsTypes.returnGet> => this.locations.update(id, body);
 
 	// Nests
-	listEggs: listeggs,
-	listNests: listnests,
-	eggDetails: eggdetails,
-	nestDetails: nestdetails,
+	getNests = (page: number = 1): Promise<NestsTypes.returnList> => this.nests.listNests(page);
+	getNest = (id: number): Promise<NestsTypes.returnGet> => this.nests.getNest(id);
+	getEggs = (nestId: number, page: number = 1): Promise<NestsTypes.returnListEggs> => this.nests.listEggs(nestId, page);
+	getEgg = (nestId: number, id: number): Promise<NestsTypes.returnGetEggs> => this.nests.getEgg(nestId, id);
 
-	// Other
-	post: post,
-	patch: patch,
-	get: get,
-	put: put,
-	delete: del,
-};
+	// NodeAllocations
+	getAllocations = (nodeId: number, page: number = 1): Promise<NodeAllocationsTypes.returnList> => this.allocations.list(nodeId, page);
+	newAllocation = (nodeId: number, body: NodeAllocationsTypes.create): Promise<NodeAllocationsTypes.returnGet> => this.allocations.create(nodeId, body);
+	delAllocation = (nodeId: number, id: number): Promise<CustomTypes.msg> => this.allocations.delete(nodeId, id);
 
-export = functions;
+	// Nodes
+	getNodes = (page: number = 1): Promise<NodesTypes.returnList> => this.nodes.list(page);
+	getNode = (id: number): Promise<NodesTypes.returnGet> => this.nodes.get(id);
+	newNode = (body: NodesTypes.create): Promise<NodesTypes.returnGet> => this.nodes.create(body);
+	updateNode = (id: number, body: NodesTypes.update): Promise<NodesTypes.returnGet> => this.nodes.update(id, body);
+	delNode = (id: number): Promise<CustomTypes.msg> => this.nodes.delete(id);
+
+	// ServerDatabases
+	getDatabases = (serverId: number, page: number = 1): Promise<ServerDatabasesTypes.returnList> => this.databases.list(serverId, page);
+	getDatabase = (serverId: number, id: number): Promise<ServerDatabasesTypes.returnGet> => this.databases.get(serverId, id);
+	newDatabase = (serverId: number, body: ServerDatabasesTypes.create): Promise<ServerDatabasesTypes.returnGet> => this.databases.create(serverId, body);
+	resetPwdDatabase = (serverId: number, id: number): Promise<ServerDatabasesTypes.returnGet> => this.databases.resetPassword(serverId, id, {});
+	delDatabase = (serverId: number, id: number): Promise<CustomTypes.msg> => this.databases.delete(serverId, id);
+
+	// Servers
+	getServers = (page: number = 1): Promise<ServersTypes.returnList> => this.servers.list(page);
+	getServer = (id: number): Promise<ServersTypes.returnGet> => this.servers.get(id);
+	getServerExternal = (externalId: string): Promise<ServersTypes.returnGet> => this.servers.getExternal(externalId);
+	newServer = (body: ServersTypes.create): Promise<ServersTypes.returnGet> => this.servers.create(body);
+	updateDetailsServer = (id: number, body: ServersTypes.updateDetails): Promise<ServersTypes.returnGet> => this.servers.updateDetails(id, body);
+	updateBuildServer = (id: number, body: ServersTypes.updateBuild): Promise<ServersTypes.returnGet> => this.servers.updateBuild(id, body);
+	updateStartupServer = (id: number, body: ServersTypes.updateStartup): Promise<ServersTypes.returnGet> => this.servers.updateStartup(id, body);
+	suspendServer = (id: number): Promise<ServersTypes.returnGet> => this.servers.suspend(id);
+	unsuspendServer = (id: number): Promise<ServersTypes.returnGet> => this.servers.unsuspend(id);
+	reinstallServer = (id: number): Promise<ServersTypes.returnGet> => this.servers.reinstall(id);
+	delServer = (id: number): Promise<CustomTypes.msg> => this.servers.delete(id);
+	forceDelServer = (id: number): Promise<CustomTypes.msg> => this.servers.forceDelete(id);
+
+	// Users
+	getUsers = (page: number = 1, filters: any = null, sortBy: any = null): Promise<UsersTypes.returnList> => this.users.list(page, filters, sortBy);
+	getUser = (id: number): Promise<UsersTypes.returnGet> => this.users.get(id);
+	getUserExternal = (externalId: string): Promise<UsersTypes.returnGet> => this.users.getExternal(externalId);
+	newUser = (body: UsersTypes.create): Promise<UsersTypes.returnGet> => this.users.create(body);
+	updateUser = (id: number, body: UsersTypes.update): Promise<UsersTypes.returnGet> => this.users.update(id, body);
+	delUser = (id: number): Promise<CustomTypes.msg> => this.users.delete(id);
+}
