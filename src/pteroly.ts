@@ -1,11 +1,8 @@
 import Admin from "./application/index.js";
 import Client from "./client/index.js";
 import Updater from "./Updater.js";
-import dotenv from "dotenv";
 import * as fs from "fs";
 // const pjson = require('../package.json');
-
-dotenv.config()
 
 type Cfg = {
   [key: string]: any;
@@ -131,10 +128,10 @@ export default functions;
   // const update = await updater.getLatest();
   // console.log(update);
 
-  const admin = new Admin("https://ptero.fyreblitz.com/", process.env.ADMIN_KEY);
-  const servers = await admin.getServers();
+  // const admin = new Admin("https://ptero.fyreblitz.com/", process.env["ADMIN_KEY"]);
+  // const servers = await admin.getServers();
   // console.log(servers.data[0].attributes.relationships)
 
-  const users = await admin.get("/users?filter[email]=engin@fyreblitz.com")
-  console.log(users.data);
+  // const users = await admin.get("/users?filter[email]=engin@fyreblitz.com")
+  // console.log(users.data);
 })()
