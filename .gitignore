@@ -4,3 +4,4 @@ node_modules
 lib
 .github
 .env
+pteroly.code-workspace
