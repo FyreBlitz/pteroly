@@ -49,6 +49,10 @@ class ClientRequest {
 
 	getRequest = async (request: string, data: any, _data: any, page: number = 0): Promise<any> => {
 		const url: string = getUrl(request, this.host, data, _data);
+
+		const cached = await getItem(page >= 0 ? url : url + ":depaginated");
+		if (cached) return cached;
+
 		if (page < 0) {
 			const result = new Promise((resolve, reject) => {
 				this.depaginateRequest(1, url).then(async (result) => {
@@ -60,9 +64,6 @@ class ClientRequest {
 			});
 			return result;
 		}
-
-		const cached = await getItem(url);
-		if (cached) return cached;
 
 		switch(request) {
 			case "GetServerStatus": case "GetCPUUsage": case "GetDiskUsage": case "GetMemoryUsage":
@@ -257,6 +258,10 @@ class ClientRequest {
 
 	cGetRequest = async (path: string, page: number = 0) => {
 		const url: string = this.host + "/api/client/" + path;
+
+		const cached = await getItem(page >= 0 ? url : url + ":depaginated");
+		if (cached) return cached;
+
 		if (page < 0) {
 			const result = new Promise((resolve, reject) => {
 				this.depaginateRequest(1, url).then(async (result) => {
@@ -268,9 +273,6 @@ class ClientRequest {
 			});
 			return result;
 		}
-		
-		const cached = await getItem(url);
-		if (cached) return cached;
 		
 		return axios({
 			url: url,
@@ -386,8 +388,16 @@ const getItem = (url: string): Promise<any> => {
 
 const setItem = async (url: string, data: any) => {
 	const caching = !!process.env.CLIENT_CACHING;
-	if (caching)
-		await reqCache.setItem(url, data, { ttl: 1 * 60 });
+	if (caching) {
+		let depaginated = await getItem(url + ":depaginated");
+		if (depaginated) {
+			let depaginatedData = data.data ? data.data : data.attributes ? data.attributes : data;
+			depaginated[depaginated.indexOf(depaginatedData)] = depaginatedData;
+			await reqCache.setItem(url + ":depaginated", depaginated, { ttl: 10 * 60 });
+		}
+		
+		await reqCache.setItem(url, data, { ttl: !url.endsWith(":depaginated") ? 1 * 60 : 10 * 60 });
+	}
 	return true;
 }
 

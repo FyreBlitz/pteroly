@@ -50,6 +50,10 @@ class ApplicationRequest {
 
 	getRequest = async (request: string, data: any, _data: any, page: number = 0): Promise<any> =>  {
 		const url = getUrl(request, this.host, data, _data);
+
+		const cached = await getItem(page >= 0 ? url : url + ":depaginated");
+		if (cached) return cached;
+
 		if (page < 0) {
 			const result = new Promise((resolve, reject) => {
 				this.depaginateRequest(1, url).then(async (result) => {
@@ -61,9 +65,6 @@ class ApplicationRequest {
 			});
 			return result;
 		}
-
-		const cached = await getItem(url);
-		if (cached) return cached;
 
 		return axios({
 			url: url,
@@ -208,6 +209,10 @@ class ApplicationRequest {
 
 	cGetRequest = async (path: string, page: number) => {
 		const url: string = (this.host + "/api/application/" + path).replace("//", "/");
+
+		const cached = await getItem(page >= 0 ? url : url + ":depaginated");
+		if (cached) return cached;
+
 		if (page < 0) {
 			const result = new Promise((resolve, reject) => {
 				this.depaginateRequest(1, url).then(async (result) => {
@@ -219,9 +224,6 @@ class ApplicationRequest {
 			});
 			return result;
 		}
-
-		const cached = await reqCache.getItem(url);
-		if (cached) return cached;
 		
 		return axios({
 			url: url,
@@ -378,8 +380,16 @@ const getItem = (url: string): Promise<any> => {
 
 const setItem = async (url: string, data: any) => {
 	const caching = !!process.env.APPLICATION_CACHING;
-	if (caching)
+	if (caching) {
+		let depaginated = await getItem(url + ":depaginated");
+		if (depaginated) {
+			let depaginatedData = data.data ? data.data : data.attributes ? data.attributes : data;
+			depaginated[depaginated.indexOf(depaginatedData)] = depaginatedData;
+			await reqCache.setItem(url + ":depaginated", depaginated, { ttl: 10 * 60 });
+		}
+
 		await reqCache.setItem(url, data, { ttl: 1 * 60 });
+	}
 	return true;
 }
 
