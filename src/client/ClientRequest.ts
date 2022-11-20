@@ -1,0 +1,335 @@
+import axios from "axios";
+import { CacheContainer } from 'node-ts-cache'
+import { MemoryStorage } from 'node-ts-cache-storage-memory'
+const reqCache = new CacheContainer(new MemoryStorage());
+
+class ClientRequest {
+	public host: string;
+	public key: string;
+
+	constructor(host: any, key: any) {
+		this.host = host;
+		this.key = key;
+	}
+
+	getRequest = async (request: string, data: any, _data: any): Promise<any> => {
+		const url: string = getUrl(request, this.host, data, _data);
+		const cached = await getItem(url);
+		if (cached) return cached;
+
+		switch(request) {
+			case "GetServerStatus": case "GetCPUUsage": case "GetDiskUsage": case "GetMemoryUsage":
+				return axios({
+					url: url,
+					maxRedirects: 5,
+					headers: {
+						"Authorization": "Bearer " + this.key,
+						"Content-Type": "application/json",
+						"Accept": "Application/vnd.pterodactyl.v1+json",
+					},
+				}).then(async (response) => {
+					switch(request) {
+						case "GetServerStatus":
+							await setItem(url, response.data.attributes.current_state);
+							return response.data.attributes.current_state;
+						case "GetCPUUsage":
+							await setItem(url, response.data.attributes.cpu_absolute);
+							return response.data.attributes.cpu_absolute;
+						case "GetMemoryUsage":
+							return response.data.attributes.resources.memory_bytes / 100000;
+						case "GetDiskUsage":
+							await setItem(url, response.data.attributes.resources.disk_bytes / 100000);
+							return response.data.attributes.resources.disk_bytes / 100000;
+						default:
+							if (`${request}`.startsWith("List") || request == "Console") {
+								await setItem(url, response.data.data);
+								return response.data.data;
+							}
+							await setItem(url, response.data.attributes);
+							return response.data.attributes;
+					}
+				}).catch((err) => {
+					throw err;
+				});
+
+			default:
+				return axios({
+					url: url,
+					method: "GET",
+					maxRedirects: 5,
+					headers: {
+						"Authorization": "Bearer " + this.key,
+						"Content-Type": "application/json",
+						"Accept": "Application/vnd.pterodactyl.v1+json",
+					},
+				}).then(async (response) => {
+					if (request.startsWith("List")) {
+						await setItem(url, response.data.data);
+						return response.data.data;
+					}
+					switch(request) {
+						case "GetServerInfo":
+							await setItem(url, response.data.attributes);
+							return response.data.attributes;
+						case "IsOwner":
+							await setItem(url, response.data.attributes.is_owner);
+							return response.data.attributes.server_owner;
+						case "GetCPU":
+							await setItem(url, response.data.attributes.limits.cpu);
+							return response.data.attributes.limits.cpu;
+						case "GetMemory":
+							await setItem(url, response.data.attributes.limits.memory);
+							return response.data.attributes.limits.memory;
+						case "GetDisk":
+							await setItem(url, response.data.attributes.limits.disk);
+							return response.data.attributes.limits.disk;
+						case "GetServerName":
+							await setItem(url, response.data.attributes.name);
+							return response.data.attributes.name;
+						case "GetNummericIP":
+							await setItem(url, response.data.attributes.relationships.allocations.data[0].attributes.ip);
+							return response.data.attributes.relationships.allocations.data[0].attributes.ip;
+						case "GetServerPort":
+							await setItem(url, response.data.attributes.relationships.allocations.data[0].attributes.port);
+							return response.data.attributes.relationships.allocations.data[0].attributes.port;
+						case "GetServerIPAlias":
+							await setItem(url, response.data.attributes.relationships.allocations.data[0].attributes.ip_alias);
+							return response.data.attributes.relationships.allocations.data[0].attributes.ip_alias;
+						default:
+							if (request.startsWith("List") || request == "Console") return response.data.data;
+							return response.data.attributes;
+					}
+				}).catch((err) => {
+					throw err;
+				});
+		}
+	}
+
+	// websocket = async (request: string, data: any, _data: any) => {
+	// 	const result = await this.getRequest(request, data, _data).catch((err: any) => console.error(err))
+	// 	if (result != null) {
+	// 		const { token, socket } = result
+	// 		if (token && socket) {
+	// 			const webSocket = new WebSocket(socket)
+	// 			webSocket.send(JSON.stringify({
+	// 				event: "auth",
+	// 				args:  [token]
+	// 			}));
+	// 			webSocket.onmessage = (event) => {
+	// 				console.log(event);
+	// 			}
+	// 			return webSocket;
+	// 		}
+	// 	}
+	// 	return null;
+	// }
+
+	postRequest = (request: string, data: any, _data: any) => {
+		const url: string = getUrl(request, this.host, data, _data);
+
+		return axios({
+			url: url,
+			method: "POST",
+			maxRedirects: 5,
+			headers: {
+				"Authorization": "Bearer " + this.key,
+				"Content-Type": "application/json",
+				"Accept": "Application/vnd.pterodactyl.v1+json",
+			},
+			data: data,
+		}).then(async (response) => {
+			await setItem(url, response.data);
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
+
+	deleteRequest = (request: string, data: string, _data: string) => {
+		const url: string = getUrl(request, this.host, data, _data);
+
+		return axios({
+			url: url,
+			method: "DELETE",
+			maxRedirects: 5,
+			headers: {
+				"Authorization": "Bearer " + this.key,
+				"Content-Type": "application/json",
+				"Accept": "Application/vnd.pterodactyl.v1+json",
+			},
+		}).then(async (response) => {
+			await setItem(url, null);
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
+
+	
+	cPostRequest = (path: string, body: JSON) => {
+		const url: string = this.host + "/api/client/" + path;
+		
+		return axios({
+			url: url,
+			method: "POST",
+			maxRedirects: 5,
+			headers: {
+				"Authorization": "Bearer " + this.key,
+				"Content-Type": "application/json",
+				"Accept": "Application/vnd.pterodactyl.v1+json",
+			},
+			data: body,
+		}).then(async (response) => {
+			await setItem(url, response.data);
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
+	
+	cPatchRequest = (path: string, body: JSON) => {
+		const url: string = this.host + "/api/client/" + path;
+		
+		return axios({
+			url: url,
+			method: "PATCH",
+			maxRedirects: 5,
+			headers: {
+				"Authorization": "Bearer " + this.key,
+				"Content-Type": "application/json",
+				"Accept": "Application/vnd.pterodactyl.v1+json",
+			},
+			data: body,
+		}).then(async (response) => {
+			await setItem(url, response.data);
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
+
+	cGetRequest = async (path: string) => {
+		const url: string = this.host + "/api/client/" + path;
+		const cached = await getItem(url);
+		if (cached) return cached;
+		
+		return axios({
+			url: url,
+			method: "GET",
+			maxRedirects: 5,
+			headers: {
+				"Authorization": "Bearer " + this.key,
+				"Content-Type": "application/json",
+				"Accept": "Application/vnd.pterodactyl.v1+json",
+			},
+		}).then(async (response) => {
+			await setItem(url, response.data);
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
+
+	cDeleteRequest = (path: string) => {
+		const url: string = this.host + "/api/client/" + path;
+		
+		return axios({
+			url: url,
+			method: "DELETE",
+			maxRedirects: 5,
+			headers: {
+				"Authorization": "Bearer " + this.key,
+				"Content-Type": "application/json",
+				"Accept": "Application/vnd.pterodactyl.v1+json",
+			},
+		}).then(async (response) => {
+			await setItem(url, null);
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
+
+	cPutRequest = (path: string, body: JSON) => {
+		const url: string = this.host + "/api/client/" + path;
+		
+		return axios({
+			url: url,
+			method: "PUT",
+			maxRedirects: 5,
+			headers: {
+				"Authorization": "Bearer " + this.key,
+				"Content-Type": "application/json",
+				"Accept": "Application/vnd.pterodactyl.v1+json",
+			},
+			data: body,
+		}).then(async (response) => {
+			await setItem(url, response.data);
+			return response.data;
+		}).catch((err) => {
+			throw err;
+		});
+	}
+}
+
+const getUrl = (request: string, host: string, data: any, _data: any): string => {
+	switch (request) {
+		// Servers
+		case "GetServerStatus": case "GetCPUUsage": case "GetMemoryUsage": case "GetDiskUsage":
+			return host + "/api/client/servers/" + data + "/resources";
+		case "ListServers":
+			if (_data != null && _data >= 0) return host + "/api/client?page=" + _data;
+			if (_data == -1) return "";
+			return host + "/api/client/";
+		case "ServerDetails": case "IsOwner": case "GetCPU": case "GetMemory": case "GetDisk": case "GetServerName": 
+		case "GetNummericIP": case "GetServerPort": case "GetServerIPAlias":
+			return host + "/api/client/servers/" + data;
+		case "StartServer": case "StopServer": case "KillServer": case "RestartServer":
+			return host + "/api/client/servers/" + _data + "/power";
+		case "SendCommand":
+			return host + "/api/client/servers/" + _data + "/command";
+
+		// Backups
+		case "CreateBackup": case "ListBackups":
+			if (_data != null) return host + "/api/client/servers/" + _data + "/backups";
+			return host + "/api/client/servers/" + data + "/backups";
+		case "DeleteBackup": case "BackupDetails":
+			return host + "/api/client/servers/" + data + "/backups/" + _data;
+		case "DownloadBackup":
+			return host + "/api/client/servers/" + data + "/backups/" + _data + "/download";
+		
+		// Other
+		case "Console":
+			return host + "/api/client/servers/" + data + "/websocket";
+		
+		default:
+			return host + "/api/client/";
+	}
+}
+
+const getItem = (url: string): Promise<any> => {
+	const caching = !!process.env.CLIENT_CACHING;
+
+	const result = new Promise((resolve, reject) => {
+		reqCache.getItem(url).then((value) => {
+			if (value && caching) {
+				resolve(value);
+			} else {
+				resolve(null);
+			}
+		}).catch((err) => {
+			reject(err);
+		});
+	});
+
+	return result;
+}
+
+const setItem = async (url: string, data: any) => {
+	const caching = !!process.env.CLIENT_CACHING;
+	if (caching)
+		await reqCache.setItem(url, data, { ttl: 1 * 60 });
+	return true;
+}
+
+export default ClientRequest;

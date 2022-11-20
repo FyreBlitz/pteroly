@@ -1,0 +1,7 @@
+# Dir for bundles
+dist
+node_modules
+lib
+.github
+.env
+pteroly.code-workspace
