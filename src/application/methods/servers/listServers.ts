@@ -72,9 +72,16 @@ interface returnType {
 	}
 }
 
+/**
+ * 
+ * @param page The page for the Servers
+ * @param showExtra Whether or not to show extra meta data (not supported when depaginating)
+ * @returns 
+ */
+
 function listServers(page: number, showExtra: boolean): Promise<returnType[]> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY)
-	return Req.getRequest('ListServers', showExtra, page);
+	return Req.getRequest('ListServers', showExtra, null, page);
 }
 
 export default listServers;

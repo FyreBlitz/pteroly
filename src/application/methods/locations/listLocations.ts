@@ -14,9 +14,9 @@ interface returnType {
 	},
 };
 
-function listLocations(): Promise<returnType[]> {
+function listLocations(page: number): Promise<returnType[]> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
-	return Req.getRequest('ListLocations', null, null);
+	return Req.getRequest('ListLocations', null, null, page);
 }
 
 export default listLocations;

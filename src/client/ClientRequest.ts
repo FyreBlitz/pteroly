@@ -12,8 +12,55 @@ class ClientRequest {
 		this.key = key;
 	}
 
-	getRequest = async (request: string, data: any, _data: any): Promise<any> => {
+	depaginateRequest = async (page: number, url: string): Promise<any> => {
+		const MAX_REQUESTS = 3;
+		const firstPage = (await axios({
+			url: `${url}?page=${page}`,
+			method: "GET",
+			maxRedirects: 5,
+			headers: {
+				"Authorization": "Bearer " + this.key,
+				"Content-Type": "application/json",
+				"Accept": "Application/vnd.pterodactyl.v1+json",
+			},
+		}))?.data;
+
+		let { total, count } = firstPage.meta.pagination;
+
+		let result = [ ...firstPage.data ];
+		let perPageOverrite = (total - count) >= MAX_REQUESTS * 100 ? (total - count) / MAX_REQUESTS : (total-count); // Amount of data to fetch per page.
+		
+		for (let i = 0; i < MAX_REQUESTS; i++) {
+			const response = await axios({
+				url: `${url}?page=${i}&per_page=${perPageOverrite}`,
+				method: "GET",
+				maxRedirects: 5,
+				headers: {
+					"Authorization": "Bearer " + this.key,
+					"Content-Type": "application/json",
+					"Accept": "Application/vnd.pterodactyl.v1+json",
+				},
+			});
+			result = [ ...result, ...response.data.data ];
+		}
+
+		return result;
+	}
+
+	getRequest = async (request: string, data: any, _data: any, page: number = 0): Promise<any> => {
 		const url: string = getUrl(request, this.host, data, _data);
+		if (page < 0) {
+			const result = new Promise((resolve, reject) => {
+				this.depaginateRequest(1, url).then(async (result) => {
+					await setItem(url + ":depaginated", result);
+					resolve(result);
+				}).catch((err) => {
+					reject(err);
+				});
+			});
+			return result;
+		}
+
 		const cached = await getItem(url);
 		if (cached) return cached;
 
@@ -208,8 +255,20 @@ class ClientRequest {
 		});
 	}
 
-	cGetRequest = async (path: string) => {
+	cGetRequest = async (path: string, page: number = 0) => {
 		const url: string = this.host + "/api/client/" + path;
+		if (page < 0) {
+			const result = new Promise((resolve, reject) => {
+				this.depaginateRequest(1, url).then(async (result) => {
+					await setItem(url + ":depaginated", result);
+					resolve(result);
+				}).catch((err) => {
+					reject(err);
+				});
+			});
+			return result;
+		}
+		
 		const cached = await getItem(url);
 		if (cached) return cached;
 		

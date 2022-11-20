@@ -13,8 +13,55 @@ class ApplicationRequest {
 		this.key = key;
 	}
 
-	getRequest = async (request: string, data: any, _data: any): Promise<any> =>  {
+	depaginateRequest = async (page: number, url: string): Promise<any> => {
+		const MAX_REQUESTS = 3;
+		const firstPage = (await axios({
+			url: `${url}?page=${page}`,
+			method: "GET",
+			maxRedirects: 5,
+			headers: {
+				"Authorization": "Bearer " + this.key,
+				"Content-Type": "application/json",
+				"Accept": "Application/vnd.pterodactyl.v1+json",
+			},
+		}))?.data;
+
+		let { total, count } = firstPage.meta.pagination;
+
+		let result = [ ...firstPage.data ];
+		let perPageOverrite = (total - count) >= MAX_REQUESTS * 100 ? (total - count) / MAX_REQUESTS : (total-count); // Amount of data to fetch per page.
+		
+		for (let i = 0; i < MAX_REQUESTS; i++) {
+			const response = await axios({
+				url: `${url}?page=${i}&per_page=${perPageOverrite}`,
+				method: "GET",
+				maxRedirects: 5,
+				headers: {
+					"Authorization": "Bearer " + this.key,
+					"Content-Type": "application/json",
+					"Accept": "Application/vnd.pterodactyl.v1+json",
+				},
+			});
+			result = [ ...result, ...response.data.data ];
+		}
+
+		return result;
+	}
+
+	getRequest = async (request: string, data: any, _data: any, page: number = 0): Promise<any> =>  {
 		const url = getUrl(request, this.host, data, _data);
+		if (page < 0) {
+			const result = new Promise((resolve, reject) => {
+				this.depaginateRequest(1, url).then(async (result) => {
+					await setItem(url + ":depaginated", result);
+					resolve(result);
+				}).catch((err) => {
+					reject(err);
+				});
+			});
+			return result;
+		}
+
 		const cached = await getItem(url);
 		if (cached) return cached;
 
@@ -159,8 +206,20 @@ class ApplicationRequest {
 		});
 	}
 
-	cGetRequest = async (path: string) => {
-		const url: string = this.host + "/api/application/" + path;
+	cGetRequest = async (path: string, page: number) => {
+		const url: string = (this.host + "/api/application/" + path).replace("//", "/");
+		if (page < 0) {
+			const result = new Promise((resolve, reject) => {
+				this.depaginateRequest(1, url).then(async (result) => {
+					await setItem(url + ":depaginated", result);
+					resolve(result);
+				}).catch((err) => {
+					reject(err);
+				});
+			});
+			return result;
+		}
+
 		const cached = await reqCache.getItem(url);
 		if (cached) return cached;
 		
@@ -234,17 +293,13 @@ const getUrl = (request: string | undefined, host: string | undefined, data: any
 		case "UserQuery":
 			return host + "/api/application/users?filter=" + data;
 		case "CreateUser": case "ListUsers":
-			if (_data != null && _data >= 0) return host + "/api/application/users?page=" + _data;
-			if (_data == -1) return "users";
 			return host + "/api/application/users";
 		
 		// Server actions
 		case "CreateServer":
 			if (_data != null) return host + "/api/application/servers?node=" + _data;
 			return host + "/api/application/servers";
-		case "ListServers": 
-			if (_data != null && _data >= 0) return host + "/api/application/servers?page=" + _data;
-			if (_data == -1) return "servers";
+		case "ListServers":
 			return host + "/api/application/servers";
 		case "ServerDetails": case "DeleteServer":
 			return host + "/api/application/servers/" + data;
@@ -267,8 +322,6 @@ const getUrl = (request: string | undefined, host: string | undefined, data: any
 		case "UpdateNode": case "DeleteNode":
 			return host + "/api/application/nodes/" + data;
 		case "ListAllocations":
-			if (_data != null && _data >= 0) return host + "/api/application/nodes/" + data + "/allocations?page=" + _data;
-			if (_data == -1) return "nodes/" + data + "/allocations";
 			return host + "/api/application/nodes/" + data + "/allocations";
 		case "CreateAllocation":
 			return host + "/api/application/nodes/" + _data + "/allocations";
@@ -286,8 +339,6 @@ const getUrl = (request: string | undefined, host: string | undefined, data: any
 
 		// Location actions
 		case "ListLocations": case "CreateLocation":
-			if (_data != null && _data >= 0) return host + "/api/application/locations?page=" + _data;
-			if (_data == -1) return "locations";
 			return host + "/api/application/locations";
 		case "DeleteLocation": case "LocationDetails": case "UpdateLocation":
 			if (_data != null) return host + "/api/application/locations/" + _data;

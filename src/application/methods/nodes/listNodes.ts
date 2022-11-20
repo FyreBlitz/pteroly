@@ -27,9 +27,9 @@ interface returnType {
 	}
 };
 
-function listNodes(): Promise<returnType[]> {
+function listNodes(page: number): Promise<returnType[]> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
-	return Req.getRequest('ListNodes', null, null);
+	return Req.getRequest('ListNodes', null, null, page);
 }
 
 export default listNodes;

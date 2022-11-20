@@ -24,7 +24,7 @@ interface resultType {
 
 function listUsers(page: number): Promise<resultType[]> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY);
-	return Req.getRequest('ListUsers', null, page);
+	return Req.getRequest('ListUsers', null, null, page);
 }
 
 export default listUsers;

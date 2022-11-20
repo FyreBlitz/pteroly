@@ -53,9 +53,9 @@ interface returnType {
 	}
 }
 
-function listEggs(nestId: number): Promise<returnType[]> {
+function listEggs(nestId: number, page: number): Promise<returnType[]> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY)
-	return Req.getRequest('ListEggs', nestId, null);
+	return Req.getRequest('ListEggs', nestId, null, page);
 }
 
 export default listEggs;

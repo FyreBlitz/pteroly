@@ -13,9 +13,9 @@ interface returnType {
 	}
 }
 
-function listNests(): Promise<returnType[]> {
+function listNests(page: number): Promise<returnType[]> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY)
-	return Req.getRequest('ListNests', null, null);
+	return Req.getRequest('ListNests', null, null, page);
 }
 
 export default listNests

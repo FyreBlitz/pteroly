@@ -53,7 +53,7 @@ interface returnType {
 
 function eggDetails(nestId: number, eggId: number): Promise<returnType> {
 	const Req = new req(process.env.APPLICATION_PTEROLY_HOST, process.env.APPLICATION_PTEROLY_KEY)
-	return Req.getRequest('EggDetails', nestId, eggId)
+	return Req.getRequest('EggDetails', nestId, eggId);
 }
 
 export default eggDetails
