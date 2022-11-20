@@ -60,12 +60,9 @@ Then you require the package and login into the Pterodactyl API:
     const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
 
 # Changelog
-Version 1.9.0:
-- Added request Caching (speeds up requests by 98.49% and when using API to create stuff it also instantly updates cache)
-- Removed experimental unpagination due to ratelimits
-- Fixed update-checker for linux clients
-- Update-Checker can be now disabled
+Version 1.9.2:
+- Added depagination back with less to no ratelimits (optimized)
 
 # To-do list
- - [ ] Class support and support of new instances (with v2.0.0).
+ - [ ] Class support and support of new instances (with v2.0.0)
  - [ ] More features (please suggest features on GitHub)
