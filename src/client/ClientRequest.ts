@@ -1,6 +1,8 @@
 import axios from "axios";
 import { CacheContainer } from 'node-ts-cache'
 import { MemoryStorage } from 'node-ts-cache-storage-memory'
+import { authDataType } from "./methods/serverActions/console";
+import { WebsocketClient } from "./Websocket";
 const reqCache = new CacheContainer(new MemoryStorage());
 
 class ClientRequest {
@@ -153,24 +155,10 @@ class ClientRequest {
 		}
 	}
 
-	// websocket = async (request: string, data: any, _data: any) => {
-	// 	const result = await this.getRequest(request, data, _data).catch((err: any) => console.error(err))
-	// 	if (result != null) {
-	// 		const { token, socket } = result
-	// 		if (token && socket) {
-	// 			const webSocket = new WebSocket(socket)
-	// 			webSocket.send(JSON.stringify({
-	// 				event: "auth",
-	// 				args:  [token]
-	// 			}));
-	// 			webSocket.onmessage = (event) => {
-	// 				console.log(event);
-	// 			}
-	// 			return webSocket;
-	// 		}
-	// 	}
-	// 	return null;
-	// }
+	websocket = async (request: string, data: any, _data: any) => {
+		const authData = await this.getRequest(request, data, _data) as authDataType;
+		return new WebsocketClient(authData, this.getRequest.bind(undefined, request, data, _data));
+	}
 
 	postRequest = (request: string, data: any, _data: any) => {
 		const url: string = getUrl(request, this.host, data, _data);

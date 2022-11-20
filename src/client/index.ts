@@ -26,6 +26,7 @@ import stopserver from "./methods/serverActions/stopServer";
 import killserver from "./methods/serverActions/killServer";
 import restartserver from "./methods/serverActions/restartServer";
 import sendcommand from "./methods/serverActions/sendCommand";
+import console from "./methods/serverActions/console";
 
 // Backups
 import createbackup from "./methods/backups/createBackup";
@@ -125,6 +126,7 @@ const functions = {
 	killServer: killserver,
 	restartServer: restartserver,
 	sendCommand: sendcommand,
+	console: console,
 
 	// Other
 	post: post,
