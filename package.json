@@ -10,7 +10,7 @@
     "buildandcopy": "tsc && cp ./src/config.cfg ./lib/config.cfg",
     "start": "tsc && cd ./lib && node pteroly.js",
     "lint": "eslint . --ext .ts",
-    "test": "ts-mocha -p tsconfig.json src/application/** src/client/**"
+    "test": "tsc"
   },
   "repository": {
     "type": "git",
