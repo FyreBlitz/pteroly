@@ -29,19 +29,19 @@ export class Socket {
     this.ws.onmessage = options.onmessage;
 
     const onOpen = options.onopen.bind(this);
-    this.ws.onopen = (e) => {
+    this.ws.onopen = (e: any) => {
       onOpen(e);
       this.reconnectNum = 0;
     };
 
     const onClose = options.onclose.bind(this);
-    this.ws.onclose = function (e) {
+    this.ws.onclose = function (e: any) {
       e.code === 1e3 || e.code === 1001 || e.code === 1005 || reconnect(e);
       onClose(e);
     };
 
     const onError = options.onerror.bind(this);
-    this.ws.onerror = function (e) {
+    this.ws.onerror = function (e: any) {
       e && (e as unknown as Record<string, string>).code === 'ECONNREFUSED'
         ? reconnect(e)
         : onError(e);
