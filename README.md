@@ -60,8 +60,9 @@ Then you require the package and login into the Pterodactyl API:
     const resultClient = await client.functionName(<ARGUMENTS>).catch((err) => console.error(err));
 
 # Changelog
-Version 1.9.4:
+Version 1.9.5:
 - Fixed a issue in 1.9.4
+- Forgor to build the last release
 
 # To-do list
  - [ ] Class support and support of new instances (with v2.0.0)
