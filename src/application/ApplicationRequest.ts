@@ -27,10 +27,10 @@ class ApplicationRequest {
 		this.key = key;
 	}
 
-	depaginateRequest = async (page: number, url: string): Promise<any> => {
+	depaginateRequest = async (url: string): Promise<any> => {
 		const MAX_REQUESTS = 3;
 		const firstPage = (await axios({
-			url: `${url}?page=${page}`,
+			url: `${url}?page=1`,
 			method: "GET",
 			maxRedirects: 5,
 			headers: {
@@ -72,7 +72,7 @@ class ApplicationRequest {
 
 		if (page < 0) {
 			const result = new Promise((resolve, reject) => {
-				this.depaginateRequest(1, url).then(async (result) => {
+				this.depaginateRequest(url).then(async (result) => {
 					await setItem(url + ":depaginated", result);
 					resolve(result);
 				}).catch((err) => {
