@@ -72,14 +72,8 @@ class ClientRequest {
 		if (cached) return cached;
 
 		if (page < 0) {
-			const result = new Promise((resolve, reject) => {
-				this.depaginateRequest(url).then(async (result) => {
-					await setItem(url + ":depaginated", result);
-					resolve(result);
-				}).catch((err) => {
-					reject(err);
-				});
-			});
+			const result = await this.depaginateRequest(url);
+			await setItem(url + ":depaginated", result);
 			return result;
 		}
 
