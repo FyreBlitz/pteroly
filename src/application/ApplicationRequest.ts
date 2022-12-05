@@ -4,6 +4,20 @@ import { CacheContainer } from 'node-ts-cache'
 import { MemoryStorage } from 'node-ts-cache-storage-memory'
 const reqCache = new CacheContainer(new MemoryStorage());
 
+const unique = (arr: any) => {
+  const uniqueIds: any[] = [];
+  arr.filter((element: any) => {
+    const isDuplicate = uniqueIds.includes(element);
+
+    if (!isDuplicate) {
+      uniqueIds.push(element);
+      return true;
+    }
+    return false;
+  });
+  return uniqueIds;
+};
+
 class ApplicationRequest {
 	public host: string | undefined;
 	public key: string | undefined;
@@ -29,11 +43,13 @@ class ApplicationRequest {
 		let { total, count } = firstPage.meta.pagination;
 
 		let result = [ ...firstPage.data ];
-		let perPageOverrite = (total - count) >= MAX_REQUESTS * 100 ? (total - count) / MAX_REQUESTS : (total-count); // Amount of data to fetch per page.
+		let perPageOverwrite = Math.ceil((total - count) >= MAX_REQUESTS * 100 ? (total - count) / MAX_REQUESTS : (total-count)); // Amount of data to fetch per page.
+		// get amount of pages to fetch and can't exceed MAX_REQUESTS
+		let pagesToFetch = Math.ceil((total - count) / perPageOverwrite) >= MAX_REQUESTS ? MAX_REQUESTS : Math.ceil((total - count) / perPageOverwrite);
 		
-		for (let i = 0; i < MAX_REQUESTS; i++) {
+		for (let i = 0; i < pagesToFetch; i++) {
 			const response = await axios({
-				url: `${url}?page=${i}&per_page=${perPageOverrite}`,
+				url: `${url}?page=${i}&per_page=${perPageOverwrite}`,
 				method: "GET",
 				maxRedirects: 5,
 				headers: {
@@ -45,7 +61,7 @@ class ApplicationRequest {
 			result = [ ...result, ...response.data.data ];
 		}
 
-		return result;
+		return unique(result);
 	}
 
 	getRequest = async (request: string, data: any, _data: any, page: number = 0): Promise<any> =>  {
