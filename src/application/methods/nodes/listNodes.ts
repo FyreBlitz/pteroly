@@ -16,6 +16,10 @@ interface returnType {
 		maintenance_mode: boolean,
 		memory: number,
 		memory_overallocate: number,
+		allocated_resources: {
+			memory: number,
+			disk: number,
+		},
 		disk: number,
 		disk_overallocate: number,
 		upload_size: number,

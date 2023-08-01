@@ -20,6 +20,10 @@ interface returnType {
 	memory_overallocate: number,
 	disk: number,
 	disk_overallocate: number,
+	allocated_resources: {
+		memory: number,
+		disk: number,
+	},
 	upload_size: number,
 	daemon_listen: number,
 	daemon_sftp: number,

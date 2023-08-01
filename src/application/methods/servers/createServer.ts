@@ -158,7 +158,7 @@ function makeData(serverData: serverData, environment = {}) {
 			'VERSION': serverData.version,
 			'QUERY_PORT': '10101',
 			'FILE_PORT': '303030',
-			'SERVER_MOTD': 'TeaSpeak\n\rHosted on PureNodes!',
+			'SERVER_MOTD': 'TeaSpeak',
 			'LD_PRELOAD': './libs/libjemalloc.so.2',
 			'MATCH': 'ts3-manager-linux-x64',
 			'GITHUB_PACKAGE': 'joni1802/ts3-manager',
