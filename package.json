@@ -7,7 +7,8 @@
   "funding": "https://paypal.me/PureNodes",
   "scripts": {
     "build": "tsc",
-    "buildandcopy": "tsc && cp ./src/config.cfg ./lib/config.cfg",
+    "buildandcopylx": "tsc && cp ./src/config.cfg ./lib/config.cfg",
+    "buildandcopywin": "tsc && copy .\\src\\config.cfg .\\lib\\config.cfg",
     "start": "tsc && cd ./lib && node pteroly.js",
     "lint": "eslint . --ext .ts",
     "test": "tsc"
